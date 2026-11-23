@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { integrations, isLaunch } from '../config/site';
+const crumbs = [{ name: 'Privacy Policy', path: '/privacy-policy/' }];
+---
+<Base title="Privacy Policy | Saxena Skin and Cosmetic Clinic, Jabalpur" description="How Saxena Skin and Cosmetic Clinic handles personal information submitted through this website, including appointment enquiries." path="/privacy-policy/" crumbs={crumbs}>
+  <PageHeader eyebrow="Legal" title="Privacy policy" crumbs={crumbs} seed={1} />
+  <div class="container section--tight">
+    <div class="prose body">
+      {!isLaunch && <p class="draft"><strong>Draft for clinic and legal review.</strong> Retention periods, the clinic’s grievance contact and data-handling arrangements must be confirmed before launch (see CONTENT-VERIFICATION.md).</p>}
+      <h2>Who we are</h2>
+      <p>This website is operated by Saxena Skin and Cosmetic Clinic, Jabalpur, Madhya Pradesh, India (“the clinic”, “we”).</p>
+      <h2>Information we collect</h2>
+      <p>When you send an appointment enquiry, we collect the details you choose to provide: your name, phone number, optional email address, the speciality or doctor you are interested in, your preferred date and time, and an optional short message. We ask you not to include detailed medical information in the form.</p>
+      <p>Like most websites, our hosting provider may record basic technical information (such as IP address, browser type and the pages requested) in server logs for security and reliability.</p>
+      {integrations.ga4Id && <p>We use Google Analytics to understand how the website is used in aggregate. Google Analytics uses cookies; IP addresses are anonymised.</p>}
+      <h2>How we use it</h2>
+      <ul>
+        <li>To contact you about your enquiry and arrange an appointment.</li>
+        <li>To keep the website secure and working properly.</li>
+      </ul>
+      <p>An enquiry is not a confirmed appointment. We do not sell your information or use it for advertising.</p>
+      <h2>Sharing</h2>
+      <p>Enquiry details are sent only to the clinic, through the service the clinic uses to receive enquiries. They are not shared with other third parties except where required by law.</p>
+      <h2>Maps and embedded content</h2>
+      <p>The map on our website is provided by Google and loads only if you choose to show it. Loading it shares your IP address with Google, under Google’s privacy policy.</p>
+      <h2>How long we keep it</h2>
+      <p>We keep enquiry details only as long as needed to respond to your enquiry and for the clinic’s legitimate record-keeping, after which they are deleted. <mark data-needs-confirmation>Retention period: to be confirmed by the clinic.</mark></p>
+      <h2>Your rights</h2>
+      <p>You may ask us to access, correct or delete the personal information you have given us through this website, or withdraw your consent to be contacted, by contacting the clinic using the details on our <a href="/contact-us/">contact page</a>.</p>
+      <h2>Changes</h2>
+      <p>We may update this policy. The current version is always published on this page.</p>
+    </div>
+  </div>
+</Base>
+<style>
+  .body { max-width: 72ch; }
+  .draft { padding: 14px 18px; border-radius: var(--r-sm); border: 1px dashed var(--champagne); background: var(--porcelain); font-size: .92rem; }
+</style>

@@ -1,0 +1,56 @@
+---
+/**
+ * Generative "skin topography" artwork — deterministic contour lines (same visual language as the identity film).
+ * Abstract by design: it never depicts a patient, a treatment or a result.
+ */
+interface Props { rings?: number; seed?: number; cx?: number; cy?: number; class?: string; stroke?: string; dot?: boolean; fluted?: boolean }
+const { rings = 13, seed = 1, cx = 0.56, cy = 0.5, class: cls = '', stroke = 'rgba(122,100,68,.55)', dot = true, fluted = false } = Astro.props;
+const W = 800, H = 1000;
+const C = [W * cx, H * cy];
+const paths: string[] = [];
+const uid = `topo-${seed}-${rings}-${Math.round(cx * 100)}-${Math.round(cy * 100)}`;
+const f = (n: number) => n.toFixed(0);
+for (let i = 0; i < rings; i++) {
+  const r = 34 + i * 36;
+  const pts: [number, number][] = [];
+  const N = 40;
+  for (let k = 0; k < N; k++) {
+    const a = (2 * Math.PI * k) / N;
+    const w = 1 + 0.09 * Math.sin(3 * a + i * 0.52 + seed) + 0.055 * Math.sin(5 * a - i * 0.77 + seed * 2) + 0.03 * Math.sin(7 * a + 1.3 + seed);
+    pts.push([C[0] + r * w * Math.cos(a) * 1.04, C[1] + r * w * Math.sin(a) * 1.18]);
+  }
+  let d = `M${f(pts[0][0])} ${f(pts[0][1])}`;
+  for (let k = 0; k < N; k++) {
+    const p0 = pts[(k - 1 + N) % N], p1 = pts[k], p2 = pts[(k + 1) % N], p3 = pts[(k + 2) % N];
+    d += `C${f(p1[0] + (p2[0] - p0[0]) / 6)} ${f(p1[1] + (p2[1] - p0[1]) / 6)} ${f(p2[0] - (p3[0] - p1[0]) / 6)} ${f(p2[1] - (p3[1] - p1[1]) / 6)} ${f(p2[0])} ${f(p2[1])}`;
+  }
+  paths.push(d + 'Z');
+}
+---
+<div class:list={['topo', cls, { fluted }]} aria-hidden="true">
+  <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" focusable="false">
+    <g id={fluted ? uid : undefined} fill="none" stroke={stroke} stroke-width="1.15" vector-effect="non-scaling-stroke">
+      {paths.map((d, i) => <path d={d} opacity={(1 - i / (rings * 1.35)).toFixed(2)} />)}
+    </g>
+    {dot && <circle cx={C[0]} cy={C[1]} r="7" fill="#125F5A" />}
+  </svg>
+  {fluted && (
+    <div class="flutes">
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" focusable="false">
+        <use href={`#${uid}`} />
+      </svg>
+    </div>
+  )}
+</div>
+
+<style>
+  .topo { position: relative; overflow: hidden; }
+  .topo svg { width: 100%; height: 100%; display: block; }
+  /* Fluted-glass treatment: a refracted copy seen through vertical slats on one side of the artwork. */
+  .flutes { position: absolute; inset: 0 0 0 58%; overflow: hidden;
+    background: linear-gradient(90deg, rgba(251,250,247,.0), rgba(251,250,247,.35));
+    -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 14px, rgba(0,0,0,.55) 14px 22px);
+            mask-image: repeating-linear-gradient(90deg, #000 0 14px, rgba(0,0,0,.55) 14px 22px); }
+  .flutes::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 1px, rgba(255,255,255,0) 1px 11px, rgba(23,23,21,.035) 11px 12px, rgba(255,255,255,0) 12px 22px); z-index: 1; }
+  .flutes svg { position: absolute; top: 0; height: 100%; width: calc(100% / .42); right: 0; transform: translateX(-14px) scaleX(1.06); filter: blur(.4px); }
+</style>

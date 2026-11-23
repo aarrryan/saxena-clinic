@@ -1,0 +1,40 @@
+---
+/**
+ * Scroll-driven identity film (homepage). The section pins to the screen and the clinic's film
+ * (reference-assets/saxena-motion-film.html, served unchanged from /media/) advances and rewinds
+ * with the visitor's scroll position, like a cinematic product page. Scrolling covers 0–16 s and
+ * stops on the logo end card (the film's last two seconds only loop back to its opening).
+ *
+ * The film draws every frame as a pure function of time (window.FILM.seek), so scrubbing is exact at
+ * any resolution, with no video file. `?export&t=0` is the film's own clean mode: no controls or sound
+ * prompt, and it starts paused at 0:00. Without JavaScript the first frame simply stays on screen.
+ */
+---
+<section class="sf" data-scrollfilm aria-label="The clinic’s identity film — scroll to play">
+  <div class="sf-pin">
+    <div class="sf-frame">
+      <iframe src="/media/identity-film.html?export&t=0" title="Saxena Skin and Cosmetic Clinic identity film" loading="lazy" tabindex="-1"></iframe>
+    </div>
+    <div class="sf-ui" aria-hidden="true">
+      <span class="sf-cue">Scroll</span>
+      <span class="sf-bar"><span data-sf-bar></span></span>
+    </div>
+  </div>
+</section>
+<style>
+  /* Scroll length: how far the visitor scrolls to play all 18 seconds. */
+  .sf { position: relative; height: 1540vh; height: 1540svh; background: #F6F3ED; margin-top: clamp(24px, 4vw, 56px); }
+  .sf-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; place-items: center; background: #F6F3ED; }
+  /* Default (phones, tablets, squarish screens): the whole 16:9 frame is visible, centred on ivory. */
+  .sf-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; }
+  /* 2px overscan hides the sub-pixel dark edge the film page can leave when scaled */
+  .sf-frame iframe { position: absolute; inset: -2px; width: calc(100% + 4px); height: calc(100% + 4px); border: 0; pointer-events: none; background: #F6F3ED; }
+  /* Wide screens (laptops, desktops): fill the screen edge to edge, cropping at most a sliver at the sides. */
+  @media (min-aspect-ratio: 155/100) {
+    .sf-frame { position: absolute; left: 50%; top: 50%; width: max(100vw, 177.78vh); width: max(100vw, 177.78svh); aspect-ratio: 16 / 9; transform: translate(-50%, -50%); }
+  }
+  .sf-ui { position: absolute; left: 50%; bottom: max(28px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: grid; justify-items: center; gap: 10px; color: var(--muted); font: 500 .72rem/1 var(--font); letter-spacing: .24em; text-transform: uppercase; transition: opacity .4s var(--ease); }
+  .sf-bar { display: block; width: 120px; height: 2px; border-radius: 2px; background: rgba(23, 25, 24, .14); overflow: hidden; }
+  .sf-bar span { display: block; height: 100%; background: var(--teal); transform-origin: 0 50%; transform: scaleX(0); }
+  .sf[data-done] .sf-cue { opacity: 0; }
+</style>

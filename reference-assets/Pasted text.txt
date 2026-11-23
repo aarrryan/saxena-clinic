@@ -1,0 +1,811 @@
+SAXENA SKIN AND COSMETIC CLINIC
+
+Complete Website Development, Branding & Search Engine Optimisation (SEO) Brief
+
+Location: Jabalpur, Madhya Pradesh, India
+
+Project objective: To develop a premium, modern, medically credible and highly SEO-optimised website that establishes Saxena Skin and Cosmetic Clinic as a leading multidisciplinary centre for dermatology, hair transplantation, laser treatments, cosmetic dermatology, gynaecology and facial aesthetics in Jabalpur and the surrounding region.
+
+---
+
+1. OUR VISION
+
+We do not want a basic clinic website that simply displays our address, doctors and contact details.
+
+We want to develop a comprehensive digital platform that:
+
+1. Establishes Saxena Skin and Cosmetic Clinic as a leading specialist medical centre in Jabalpur.
+2. Achieves strong organic Google visibility for dermatology, skin specialists, hair transplantation, laser treatments and cosmetic procedures.
+3. Builds credibility and trust through the qualifications, expertise and experience of our five consultants.
+4. Generates new patient enquiries and appointments.
+5. Educates patients through high-quality, medically reviewed content.
+6. Establishes a premium brand identity comparable to leading specialist clinics in metropolitan cities.
+7. Develops long-term digital authority for the clinic.
+
+The website must be designed with SEO as a foundation rather than treating SEO as something to add after development.
+
+Our ultimate goal is to make Saxena Skin and Cosmetic Clinic one of the first and most credible options people discover when searching for relevant specialist medical services in Jabalpur.
+
+2. BRAND POSITIONING
+
+Official name: Saxena Skin and Cosmetic Clinic
+
+Location: Jabalpur, Madhya Pradesh.
+
+Proposed positioning:
+
+A Multidisciplinary Centre for Skin, Hair, Laser, Cosmetic Dermatology, Hair Transplantation, Women's Health and Facial Aesthetics.
+
+The website should communicate the following strengths:
+
+- Established specialist medical practice.
+- Five consultants with complementary specialities.
+- More than four decades of dermatological experience within the senior consultant's practice.
+- Comprehensive clinical dermatology.
+- Advanced laser dermatology.
+- Hair transplantation and hair restoration.
+- Cosmetic dermatology and aesthetic medicine.
+- Gynaecology and cosmetic gynaecology.
+- Cranio-maxillofacial surgery and facial aesthetics.
+- Personalised, evidence-based medical care.
+
+The clinic should be presented as a specialist medical establishment, not as a beauty salon or commercial cosmetic centre.
+
+3. OUR FIVE CONSULTANTS
+
+This is one of the most important sections of the website.
+
+Each consultant must have an individual professional profile page with a photograph, qualifications, experience, areas of expertise, consultation details and links to relevant treatments.
+
+A. Dr. Rajeev Saxena
+
+Senior Consultant Dermatologist
+
+Experience: 40+ years.
+
+Dr. Rajeev Saxena is the senior-most and most experienced dermatologist at the clinic, with over four decades of experience in dermatology.
+
+His profile should highlight:
+
+- More than 40 years of clinical experience.
+- Extensive experience in clinical dermatology.
+- Diagnosis and management of complex skin disorders.
+- Psoriasis and other chronic inflammatory skin conditions.
+- Vitiligo and pigmentation disorders.
+- Acne and other common dermatological conditions.
+- Comprehensive medical dermatology.
+
+His experience should be prominently displayed on the homepage and his individual profile.
+
+The website should position him as the senior consultant and a major pillar of the clinic's medical legacy.
+
+B. Dr. Akshay Saxena
+
+Consultant Dermatologist – Clinical and Laser Dermatology
+
+His profile should focus on two major areas: clinical dermatology and advanced laser procedures.
+
+Areas of expertise to highlight:
+
+- Clinical dermatology.
+- Laser dermatology.
+- Laser hair reduction.
+- Fractional CO2 laser treatments.
+- Q-switched Nd:YAG laser.
+- Pico laser treatments.
+- Acne scar management.
+- Pigmentation and skin rejuvenation.
+- Cosmetic dermatology.
+- Advanced dermatological procedures.
+- Regenerative and injectable treatments, where offered.
+
+Laser proficiency should be a prominent differentiating feature of his profile.
+
+The website should include a dedicated page linking his expertise to the clinic's laser technology and procedures.
+
+C. Dr. Nischay Saxena
+
+Dermatologist / Hair Transplantation and Hair Restoration
+
+His profile should focus on hair restoration and hair transplantation.
+
+Areas to highlight:
+
+- Hair transplantation.
+- Hair restoration procedures.
+- Male pattern baldness.
+- Female pattern hair loss.
+- Hair loss evaluation.
+- Medical management of hair disorders.
+- Alopecia and scalp disorders.
+- PRP for hair restoration.
+- Pre-transplant evaluation and post-transplant care.
+
+A dedicated hair transplantation section should be developed, prominently associated with Dr. Nischay Saxena.
+
+The exact surgical techniques and qualifications must be displayed only after verification.
+
+D. Dr. Amita Saxena
+
+Consultant Gynaecologist and Cosmetic Gynaecology Specialist
+
+Her profile should highlight:
+
+- General gynaecological consultations.
+- Women's health.
+- Menstrual health.
+- Menopause-related concerns.
+- Cosmetic gynaecology.
+- Intimate health.
+- Vaginal rejuvenation, where offered.
+- PRP and regenerative gynaecological therapies, where clinically appropriate.
+- Injectable and aesthetic therapies.
+
+The tone should be professional, sensitive, medically credible and reassuring.
+
+E. Dr. Jigisha Chhangani
+
+Cranio-Maxillofacial Surgeon and Facial Aesthetics Specialist
+
+Her profile should highlight:
+
+- Cranio-maxillofacial surgery.
+- Facial aesthetic surgery.
+- Facial harmony and proportions.
+- Facial asymmetry evaluation.
+- Facial reconstructive procedures.
+- Facial contouring.
+- Surgical facial aesthetics.
+- Non-surgical facial aesthetic procedures, where offered.
+
+Her speciality should have its own dedicated website section rather than being merged with cosmetic dermatology.
+
+Important: All five consultants must have individual SEO-friendly profile URLs and proper professional biographies.
+
+The website must use actual photographs, verified qualifications, accurate registration details and genuine areas of clinical expertise.
+
+4. WEBSITE STRUCTURE AND NAVIGATION
+
+We require a proper multi-page website rather than a single-page landing website.
+
+The main navigation should include:
+
+1. Home
+2. About Us
+3. Our Doctors
+4. Dermatology
+5. Hair Clinic and Hair Transplantation
+6. Laser Treatments
+7. Cosmetic Dermatology
+8. Cosmetic Gynaecology
+9. Facial Aesthetics
+10. Conditions We Treat
+11. Patient Education / Blog
+12. Contact Us / Appointments
+
+Each major speciality and important treatment must have its own dedicated page.
+
+This is essential for targeting different Google searches effectively.
+
+5. CLINICAL DERMATOLOGY
+
+Dermatology must be the primary SEO focus of the website.
+
+We want dedicated pages for:
+
+Common dermatological conditions
+
+- Acne.
+- Acne scars.
+- Rosacea.
+- Melasma.
+- Hyperpigmentation.
+- Psoriasis.
+- Vitiligo.
+- Eczema.
+- Atopic dermatitis.
+- Contact dermatitis.
+- Seborrheic dermatitis.
+- Fungal infections.
+- Bacterial skin infections.
+- Viral skin infections.
+- Urticaria.
+- Chronic itching.
+- Lichen planus.
+- Skin allergies.
+- Pediatric dermatology.
+- Nail disorders.
+- Hair and scalp disorders.
+- Autoimmune skin diseases.
+- Sexually transmitted infections and genital dermatology.
+
+Advanced dermatological treatments
+
+- Biological therapies.
+- JAK inhibitor treatments where indicated.
+- Advanced vitiligo management.
+- Chronic and difficult-to-treat psoriasis.
+- Advanced acne management.
+- Hair loss management.
+- Autoimmune dermatological conditions.
+- Dermatological procedures and biopsies.
+
+Each page must contain useful information explaining the condition, symptoms, causes, diagnosis, treatment options and when to consult a dermatologist.
+
+6. HAIR CLINIC AND HAIR TRANSPLANTATION
+
+This should be a major section of the website.
+
+It should be divided into two categories.
+
+A. Medical hair restoration
+
+- Male pattern baldness.
+- Female pattern hair loss.
+- Androgenetic alopecia.
+- Alopecia areata.
+- Telogen effluvium.
+- Scarring alopecia.
+- Hair thinning.
+- Dandruff and scalp disorders.
+- PRP for hair loss.
+- Medical management of hair loss.
+
+B. Hair transplantation
+
+- Hair transplantation consultation.
+- FUE hair transplantation, if offered.
+- Hairline design.
+- Hair transplant planning.
+- Candidate evaluation.
+- Male pattern baldness.
+- Pre-transplant assessment.
+- Post-transplant care.
+- Long-term hair restoration.
+
+Dedicated SEO keywords:
+
+- Hair transplant in Jabalpur.
+- Hair transplantation in Jabalpur.
+- Hair transplant doctor in Jabalpur.
+- Hair restoration clinic in Jabalpur.
+- FUE hair transplant in Jabalpur, if offered.
+- Hair loss treatment in Jabalpur.
+- PRP hair treatment in Jabalpur.
+
+This section should be prominently associated with Dr. Nischay Saxena.
+
+7. COSMETIC DERMATOLOGY AND AESTHETIC MEDICINE
+
+This section should communicate the clinic's expertise in medical aesthetics and specialist-led cosmetic procedures.
+
+Facial rejuvenation
+
+- Botox and neuromodulators.
+- Dermal fillers.
+- Hyaluronic acid fillers.
+- Facial rejuvenation.
+- Fine lines and wrinkles.
+- Skin boosters, where offered.
+- Non-surgical facial rejuvenation.
+
+Skin rejuvenation
+
+- Chemical peels.
+- Fractional laser treatments.
+- Acne scar management.
+- Skin resurfacing.
+- Pigmentation management.
+- Photorejuvenation.
+- Skin texture improvement.
+- Skin quality treatments.
+
+Regenerative and injectable treatments
+
+- PRP.
+- Exosomes, where clinically and legally appropriate.
+- Regenerative aesthetic procedures.
+- Other evidence-supported injectable treatments.
+
+The section should look premium and visually attractive while maintaining a medical identity.
+
+8. LASER AND ADVANCED TECHNOLOGY
+
+We want a dedicated Laser and Advanced Technology section.
+
+The clinic's laser expertise and available equipment should be showcased properly.
+
+Treatment pages should include:
+
+- Laser hair reduction.
+- Fractional CO2 laser.
+- Q-switched Nd:YAG laser.
+- Pico laser treatments.
+- Pigmentation treatments.
+- Tattoo removal, where offered.
+- Acne scar laser treatments.
+- Skin resurfacing.
+- Laser-based rejuvenation.
+
+We should upload actual photographs and videos of our equipment and treatment rooms.
+
+Every laser page should explain:
+
+- Technology and working principle.
+- Indications.
+- Suitable candidates.
+- Expected treatment sessions.
+- Downtime and recovery.
+- Precautions.
+- Potential adverse effects.
+- Treatment expectations.
+
+Dr. Akshay Saxena's laser proficiency should be highlighted throughout the relevant section.
+
+9. GYNAECOLOGY AND COSMETIC GYNAECOLOGY
+
+A separate speciality section associated with Dr. Amita Saxena.
+
+It should include:
+
+- General gynaecology.
+- Women's intimate health.
+- Menstrual health.
+- Menopause-related concerns.
+- Cosmetic gynaecology.
+- Vaginal rejuvenation, where offered.
+- PRP-based therapies, where appropriate.
+- Regenerative and injectable therapies.
+- Other available women's wellness services.
+
+10. CRANIO-MAXILLOFACIAL SURGERY AND FACIAL AESTHETICS
+
+A separate speciality section associated with Dr. Jigisha Chhangani.
+
+It should include relevant services such as:
+
+- Cranio-maxillofacial consultations.
+- Facial deformity evaluation.
+- Facial trauma and reconstruction.
+- Facial asymmetry.
+- Facial aesthetic assessment.
+- Facial contouring.
+- Surgical facial aesthetics.
+- Non-surgical facial aesthetics.
+
+Surgical and non-surgical services should be clearly differentiated.
+
+11. ABOUT US
+
+The About Us page should establish the identity and philosophy of the clinic.
+
+Suggested introduction:
+
+"Saxena Skin and Cosmetic Clinic is a multidisciplinary specialist medical practice in Jabalpur, bringing together expertise in dermatology, clinical and cosmetic dermatology, laser treatments, hair transplantation, gynaecology and cranio-maxillofacial and facial aesthetics.
+
+With five specialist consultants and over four decades of dermatological experience within the practice, our aim is to provide comprehensive, personalised and evidence-based care across skin, hair, women's health and facial aesthetics."
+
+The page should include:
+
+- Clinic history.
+- Medical philosophy.
+- Our five consultants.
+- Clinic infrastructure.
+- Treatment facilities.
+- Laser technology.
+- Consultation facilities.
+- Photographs of the clinic.
+- Location and accessibility.
+
+12. HOMEPAGE DESIGN
+
+The homepage must immediately communicate our speciality, location and expertise.
+
+Proposed headline:
+
+Expert Care for Skin, Hair and Aesthetics
+
+Supporting description:
+
+"A multidisciplinary team of specialist consultants offering clinical dermatology, advanced laser treatments, hair transplantation, cosmetic dermatology, gynaecology and facial aesthetics in Jabalpur."
+
+The homepage should contain:
+
+1. Clinic logo and navigation.
+2. Premium hero section.
+3. Clear mention of Jabalpur.
+4. Introduction to the clinic.
+5. Five consultant profiles.
+6. Dermatology services.
+7. Hair transplantation and restoration.
+8. Laser and aesthetic treatments.
+9. Gynaecology and facial aesthetics.
+10. Clinic infrastructure.
+11. Patient education articles.
+12. Contact details.
+13. Google Maps integration.
+14. WhatsApp and appointment enquiry buttons.
+
+Dr. Rajeev Saxena's 40+ years of experience should be highlighted prominently.
+
+13. SEARCH ENGINE OPTIMISATION – PRIMARY PROJECT PRIORITY
+
+The website must be developed to target actual Google search behaviour.
+
+We want to establish visibility in three categories.
+
+A. Primary local keywords
+
+- Dermatologist in Jabalpur.
+- Best dermatologist in Jabalpur.
+- Skin specialist in Jabalpur.
+- Skin doctor in Jabalpur.
+- Skin clinic in Jabalpur.
+- Dermatology clinic in Jabalpur.
+- Hair specialist in Jabalpur.
+- Hair transplant in Jabalpur.
+- Laser clinic in Jabalpur.
+- Cosmetic dermatologist in Jabalpur.
+
+B. Treatment-specific keywords
+
+- Psoriasis treatment in Jabalpur.
+- Vitiligo treatment in Jabalpur.
+- Acne treatment in Jabalpur.
+- Acne scar treatment in Jabalpur.
+- Pigmentation treatment in Jabalpur.
+- Hair fall treatment in Jabalpur.
+- PRP hair treatment in Jabalpur.
+- Laser hair removal in Jabalpur.
+- Fractional CO2 laser in Jabalpur.
+- Botox in Jabalpur.
+- Dermal fillers in Jabalpur.
+- Hair transplantation in Jabalpur.
+
+C. Regional keywords
+
+We should also aim to attract relevant patients from surrounding regions, including:
+
+- Katni.
+- Narsinghpur.
+- Seoni.
+- Mandla.
+- Damoh.
+- Sagar.
+- Chhindwara.
+- Satna.
+- Other areas of Madhya Pradesh.
+
+Regional content must be genuinely useful and should not consist of repetitive, duplicate location pages.
+
+14. ON-PAGE SEO REQUIREMENTS
+
+Every important webpage must have:
+
+- Unique SEO title.
+- Unique meta description.
+- One clear H1 heading.
+- Proper H2 and H3 headings.
+- Naturally incorporated keywords.
+- Clean URL structure.
+- Relevant image alt text.
+- Internal links.
+- Relevant authoritative references.
+- Canonical URLs.
+- Social sharing metadata.
+
+Suggested URL structure:
+
+- /about-us/
+- /our-doctors/
+- /our-doctors/dr-rajeev-saxena/
+- /our-doctors/dr-akshay-saxena/
+- /our-doctors/dr-nischay-saxena/
+- /our-doctors/dr-amita-saxena/
+- /our-doctors/dr-jigisha-chhangani/
+- /dermatology/
+- /dermatology/acne-treatment/
+- /dermatology/psoriasis/
+- /dermatology/vitiligo/
+- /hair-clinic/
+- /hair-clinic/hair-transplantation/
+- /hair-clinic/prp-hair-treatment/
+- /laser-treatments/
+- /laser-treatments/fractional-co2-laser/
+- /cosmetic-dermatology/
+- /cosmetic-gynaecology/
+- /facial-aesthetics/
+- /patient-education/
+- /contact-us/
+
+15. TECHNICAL SEO
+
+The website must have:
+
+- Mobile-first responsive design.
+- Fast loading speed.
+- HTTPS and SSL.
+- XML sitemap.
+- Proper robots.txt.
+- Correct indexing settings.
+- Canonical URLs.
+- Structured data and schema markup.
+- Google Analytics 4.
+- Google Search Console.
+- Google Maps integration.
+- Image compression using WebP/AVIF where supported.
+- Good Core Web Vitals.
+- Accessible navigation and readable typography.
+- Regular backups and security updates.
+
+Important schema types should include LocalBusiness or the most appropriate MedicalBusiness subtype, Physician for individual doctors, and relevant structured data for articles and website navigation.
+
+All structured data must accurately reflect visible, verified website information.
+
+16. GOOGLE BUSINESS PROFILE AND LOCAL SEO
+
+The website must work in conjunction with our Google Business Profile.
+
+We need:
+
+- Correct clinic name and address.
+- Accurate telephone numbers.
+- Correct clinic timings.
+- Appropriate primary and secondary categories.
+- Website and appointment links.
+- Professional photographs.
+- Consultant photographs.
+- Clinic and equipment photographs.
+- Accurate Google Maps location.
+- Regular educational updates.
+- Genuine patient review collection.
+- Professional responses to reviews.
+
+The clinic's name, address and telephone number must be consistent across Google, the website, Maps and other relevant directories.
+
+We should develop legitimate local references and professional backlinks rather than purchasing low-quality backlinks.
+
+17. BLOG AND PATIENT EDUCATION
+
+A dedicated educational section is essential for long-term organic search growth.
+
+Suggested topics:
+
+Dermatology
+
+- Why does acne keep recurring?
+- Understanding melasma.
+- Psoriasis and modern treatment options.
+- Understanding vitiligo.
+- Difference between fungal infection and eczema.
+- Skin allergies and chronic itching.
+
+Hair
+
+- Causes of hair fall in men and women.
+- Understanding androgenetic alopecia.
+- Hair transplantation: who is a suitable candidate?
+- PRP for hair loss.
+- Understanding alopecia areata.
+
+Laser and aesthetics
+
+- Understanding fractional CO2 laser.
+- Botox versus dermal fillers.
+- Chemical peels and their indications.
+- Laser hair reduction.
+- Acne scar treatment options.
+- Understanding skin boosters.
+
+Advanced dermatology
+
+- Biological therapies in psoriasis.
+- JAK inhibitors in dermatology.
+- Advanced management of vitiligo.
+- Regenerative therapies.
+
+Women's health and facial aesthetics
+
+- Understanding cosmetic gynaecology.
+- Vaginal rejuvenation: evidence and expectations.
+- Facial aesthetics and facial harmony.
+- Surgical versus non-surgical facial rejuvenation.
+
+Every article must have a named medical author or reviewer, relevant qualifications, references, publication date and meaningful update date.
+
+Content must be medically accurate, patient-friendly and genuinely useful. We should avoid mass-produced generic AI articles.
+
+18. WEBSITE DESIGN AND VISUAL IDENTITY
+
+The website should have a premium, modern, minimalistic medical aesthetic.
+
+Preferred visual direction:
+
+- White and ivory backgrounds.
+- Beige and champagne accents.
+- Subtle gold detailing.
+- Elegant typography.
+- Professional consultant photographs.
+- Actual clinic photographs.
+- High-quality treatment photographs.
+- Minimal animations.
+- Clean navigation.
+- Spacious layouts.
+
+It must look like a premium specialist medical clinic rather than a salon or beauty parlour.
+
+We should invest in a professional photography session covering all five consultants, reception, consultation rooms, laser rooms, equipment and clinic interiors.
+
+19. APPOINTMENT AND WHATSAPP INTEGRATION
+
+The website should convert visitors into appointment enquiries.
+
+Required features:
+
+- Prominent WhatsApp button.
+- Click-to-call facility.
+- Online appointment enquiry.
+- Doctor selection.
+- Department selection.
+- Preferred date and time.
+- Appointment confirmation workflow.
+- Google Maps directions.
+- Automated WhatsApp acknowledgement, where integrated.
+
+Ideally, the website should connect with our existing clinic appointment management system rather than creating a separate disconnected booking system.
+
+Patient information must be handled securely and in accordance with applicable privacy requirements.
+
+20. ADMIN PANEL AND WEBSITE OWNERSHIP
+
+We must have an easy-to-use content management system.
+
+The clinic should be able to independently:
+
+- Add and edit doctor profiles.
+- Update qualifications and experience.
+- Add new services.
+- Upload photographs.
+- Publish blogs.
+- Update clinic timings.
+- Modify contact information.
+- Add new treatment pages.
+
+The clinic must retain ownership and administrative access to:
+
+- Domain.
+- Hosting.
+- Website source code.
+- CMS administrator account.
+- Google Analytics.
+- Google Search Console.
+- Google Business Profile.
+
+We should receive complete handover documentation and training.
+
+21. SEO IMPLEMENTATION TIMELINE
+
+First 30 days
+
+- Website development and launch.
+- Technical SEO foundation.
+- Keyword research.
+- Consultant profiles.
+- Main speciality pages.
+- Google Business Profile optimisation.
+- Google Analytics and Search Console setup.
+
+Days 30–90
+
+- Publish detailed dermatology pages.
+- Publish hair and hair transplantation pages.
+- Publish laser treatment pages.
+- Begin educational blog publication.
+- Improve internal linking.
+- Monitor search rankings.
+- Improve appointment conversion.
+
+Months 3–6
+
+- Expand medical condition pages.
+- Develop regional visibility.
+- Publish medically reviewed articles consistently.
+- Develop legitimate professional backlinks.
+- Improve Google Maps visibility.
+- Analyse patient enquiries and organic traffic.
+
+Ongoing
+
+- Monthly SEO reports.
+- Keyword ranking analysis.
+- Technical audits.
+- Content updates.
+- Google Business Profile management.
+- Conversion optimisation.
+
+22. MONTHLY PERFORMANCE REPORTING
+
+We want a monthly report containing:
+
+1. Total website visitors.
+2. Organic Google traffic.
+3. Google search impressions.
+4. Google search clicks.
+5. Keywords ranking in the top 3, 10 and 20.
+6. Google Maps visibility.
+7. WhatsApp clicks.
+8. Telephone clicks.
+9. Appointment enquiries.
+10. Most visited service pages.
+11. New backlinks and local citations.
+12. Areas requiring improvement.
+
+We must measure actual appointment enquiries, not merely website traffic.
+
+23. SUCCESS CRITERIA
+
+Our most important target searches are:
+
+- Dermatologist in Jabalpur.
+- Skin specialist in Jabalpur.
+- Best dermatologist in Jabalpur.
+- Skin clinic in Jabalpur.
+- Hair specialist in Jabalpur.
+- Hair transplant in Jabalpur.
+- Laser treatment in Jabalpur.
+- Cosmetic dermatologist in Jabalpur.
+- Psoriasis treatment in Jabalpur.
+- Vitiligo treatment in Jabalpur.
+- Acne scar treatment in Jabalpur.
+
+Our ambition is to achieve first-page and eventually top-three organic and local-map visibility for the most relevant searches.
+
+No developer or SEO agency should guarantee a specific Google position. We expect a transparent, measurable and sustained strategy.
+
+24. FINAL EXPECTATIONS FROM THE DEVELOPER
+
+This project must be treated as a complete digital branding and patient-acquisition initiative.
+
+The final deliverables should include:
+
+- Premium multi-page website.
+- Five individual consultant profile pages.
+- Dedicated dermatology section.
+- Dedicated hair clinic and hair transplantation section.
+- Dedicated laser technology section.
+- Cosmetic dermatology section.
+- Cosmetic gynaecology section.
+- Cranio-maxillofacial and facial aesthetics section.
+- Individual medical condition pages.
+- Patient education and blog section.
+- Complete technical SEO implementation.
+- Local SEO foundation.
+- Google Business Profile assistance.
+- WhatsApp integration.
+- Appointment enquiry functionality.
+- Analytics and Search Console.
+- Admin panel.
+- Security and backup arrangements.
+- Complete website ownership and handover.
+
+---
+
+FINAL BRAND VISION
+
+Saxena Skin and Cosmetic Clinic should be positioned as a comprehensive multidisciplinary specialist medical centre in Jabalpur.
+
+Our major strengths are:
+
+1. Over 40 years of dermatological experience under Dr. Rajeev Saxena.
+2. Clinical and advanced laser dermatology under Dr. Akshay Saxena.
+3. Hair transplantation and hair restoration under Dr. Nischay Saxena.
+4. Gynaecology and cosmetic gynaecology under Dr. Amita Saxena.
+5. Cranio-maxillofacial surgery and facial aesthetics under Dr. Jigisha Chhangani.
+
+We want the website to communicate medical expertise, clinical experience, advanced technology, specialist-led care and a premium patient experience.
+
+The most important instruction is that this website must be built to become a long-term digital asset for Saxena Skin and Cosmetic Clinic, not simply an online brochure.
+
+Its purpose is to strengthen our brand, establish our digital authority, improve our visibility on Google and consistently bring relevant new patients to our clinic.
+
+Build for credibility. Optimise for Google. Design for patients. Grow for the long term.

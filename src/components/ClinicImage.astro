@@ -1,0 +1,18 @@
+---
+/** Real clinic stills, cropped from the clinic's own footage with no patient and no burned-in captions. */
+import { Picture } from 'astro:assets';
+import laserConsole from '../assets/clinic/laser-console.png';
+import laserControls from '../assets/clinic/laser-controls.png';
+import treatmentPreparation from '../assets/clinic/treatment-preparation.png';
+
+const images = {
+  'laser-console': { src: laserConsole, alt: 'The clinic’s DEKA fractional CO2 laser system, showing its touchscreen console and control panel.' },
+  'laser-controls': { src: laserControls, alt: 'A gloved hand at the key switch of the clinic’s laser system, beside the red emergency stop button.' },
+  'treatment-preparation': { src: treatmentPreparation, alt: 'Clinic staff in gloves preparing a skin treatment, pouring a measured amount into a small glass bowl.' },
+} as const;
+export type ClinicImageKey = keyof typeof images;
+interface Props { name: ClinicImageKey; class?: string; sizes?: string; eager?: boolean }
+const { name, class: cls, sizes = '(min-width: 900px) 40vw, 100vw', eager = false } = Astro.props;
+const img = images[name];
+---
+<Picture src={img.src} alt={img.alt} formats={['avif', 'webp']} fallbackFormat="jpg" quality={78} widths={[360, 540, 720]} sizes={sizes} class={cls} loading={eager ? 'eager' : 'lazy'} decoding="async" />

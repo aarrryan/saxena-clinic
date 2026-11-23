@@ -1,0 +1,42 @@
+---
+import type { Doctor } from '../data/doctors';
+import { fullName } from '../data/doctors';
+import { site, canShow } from '../config/site';
+interface Props { doctor: Doctor; headingLevel?: 'h2' | 'h3'; compact?: boolean }
+const { doctor: d, headingLevel = 'h3', compact = false } = Astro.props;
+const H = headingLevel;
+---
+<a class:list={['doc', { compact }]} href={`/our-doctors/${d.slug}/`}>
+  <div class="portrait" aria-hidden="true">
+    <span class="mono">{d.initials}</span>
+    <span class="arc"></span>
+  </div>
+  <div class="body">
+    <p class="disc">{d.discipline}</p>
+    <H class="nm">{fullName(d)}</H>
+    <p class="role">{d.role}</p>
+    {d.experienceYears && canShow(site.rajeevExperienceYears) && <p class="exp"><strong>{d.experienceYears}+ years</strong> of dermatological experience</p>}
+    <span class="more">View profile <span aria-hidden="true">→</span></span>
+  </div>
+</a>
+<style>
+  .doc { display: flex; flex-direction: column; text-decoration: none; background: var(--porcelain); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; transition: transform .35s var(--ease), box-shadow .35s var(--ease); height: 100%; }
+  .doc:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .portrait { position: relative; aspect-ratio: 4 / 3.4; background: linear-gradient(160deg, var(--sand-soft), var(--ivory)); display: grid; place-items: center; overflow: hidden; }
+  .compact .portrait { aspect-ratio: 16 / 9; }
+  .mono { font-size: clamp(2.6rem, 2rem + 2vw, 3.6rem); font-weight: 500; letter-spacing: .08em; color: var(--champagne-ink); }
+  .arc { position: absolute; width: 150%; aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(122,100,68,.22); top: 58%; left: -25%; }
+  .body { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .disc { margin: 0; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .nm { font-size: 1.3rem; margin: 2px 0 0; }
+  .role { margin: 0; color: var(--ink-soft); font-size: .95rem; line-height: 1.45; }
+  .exp { margin: 6px 0 0; font-size: .92rem; color: var(--champagne-ink); }
+  .more { margin-top: auto; padding-top: 14px; font-weight: 500; font-size: .92rem; }
+  @media (max-width: 480px) {
+    .doc { flex-direction: row; }
+    .portrait, .compact .portrait { aspect-ratio: auto; width: 92px; flex: none; }
+    .mono { font-size: 1.5rem; }
+    .body { padding: 16px 18px; }
+    .nm { font-size: 1.12rem; }
+  }
+</style>

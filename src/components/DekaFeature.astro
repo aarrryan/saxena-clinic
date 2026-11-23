@@ -1,0 +1,44 @@
+---
+import ClinicImage from './ClinicImage.astro';
+import { DEKA_STATEMENT } from '../data/topics';
+interface Props { headingLevel?: 'h2' | 'h3'; image?: 'laser-console' | 'laser-controls'; compact?: boolean }
+const { headingLevel = 'h2', image = 'laser-console', compact = false } = Astro.props;
+const H = headingLevel;
+---
+<section class:list={['deka', { compact }]} aria-labelledby="deka-h" data-reveal>
+  <div class="media">
+    <ClinicImage name={image} sizes="(min-width: 900px) 34vw, 100vw" />
+    <span class="badge glass">In clinic · Italian DEKA technology</span>
+  </div>
+  <div class="text">
+    <p class="eyebrow">Laser technology</p>
+    <H id="deka-h">Fractional CO2 laser, using Italian DEKA technology</H>
+    <p class="lede">{DEKA_STATEMENT}</p>
+    <ul class="ind" aria-label="Concerns treated">
+      <li><span>01</span>Acne scars</li>
+      <li><span>02</span>Stretch marks</li>
+      <li><span>03</span>Post-traumatic injury scars</li>
+    </ul>
+    <p class="small muted">Led by Dr. Akshay Saxena, consultant dermatologist — clinical and laser dermatology. Suitability is decided at a specialist assessment; results vary between individuals.</p>
+    <div class="actions">
+      <a class="btn" href="/laser-treatments/fractional-co2-laser/">About fractional CO2 laser <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="link-arrow" href="/our-doctors/dr-akshay-saxena/">Dr. Akshay Saxena <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+<style>
+  .deka { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: center; background: var(--porcelain); border-radius: var(--r-lg); padding: clamp(20px, 3vw, 40px); border: 1px solid var(--line); }
+  @media (max-width: 860px) { .deka { grid-template-columns: 1fr; } }
+  .media { position: relative; border-radius: calc(var(--r-lg) - 10px); overflow: hidden; aspect-ratio: 4 / 4.2; background: var(--sand-soft); }
+  .media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .badge { position: absolute; left: 14px; bottom: 14px; padding: 9px 14px; border-radius: 999px; font-size: .8rem; font-weight: 500; }
+  .text { display: grid; gap: 18px; padding-block: 8px; }
+  .text h2, .text h3 { font-size: var(--fs-h2); max-width: 18ch; }
+  .compact .text h2, .compact .text h3 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem); }
+  .text .lede { margin: 0; }
+  .ind { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+  @media (max-width: 560px) { .ind { grid-template-columns: 1fr; } }
+  .ind li { padding: 16px 12px 4px 0; font-weight: 500; font-size: 1.05rem; display: grid; gap: 6px; }
+  .ind span { font-size: .75rem; color: var(--champagne-ink); letter-spacing: .12em; font-weight: 600; }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+</style>

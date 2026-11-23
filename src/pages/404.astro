@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import TopoArt from '../components/TopoArt.astro';
+import { specialities } from '../data/nav';
+---
+<Base title="Page not found | Saxena Skin and Cosmetic Clinic" description="The page you were looking for could not be found." path="/404/" noindex>
+  <section class="frame nf">
+    <div class="surface inner">
+      <TopoArt class="art" seed={9} rings={12} cx={0.7} cy={0.5} />
+      <div class="container txt">
+        <p class="eyebrow">Error 404</p>
+        <h1>This page could not be found.</h1>
+        <p class="lede">It may have moved. Try one of our specialities, or return to the home page.</p>
+        <ul>{specialities.map((s) => <li><a class="link-arrow" href={s.href}>{s.label} <span aria-hidden="true">→</span></a></li>)}</ul>
+        <a class="btn" href="/">Back to home</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .nf { margin-top: 14px; }
+  .inner { position: relative; overflow: hidden; padding: clamp(56px, 8vw, 120px) 0; }
+  .inner :global(.art) { position: absolute; right: -8%; top: -10%; width: 50%; height: 120%; opacity: .6; }
+  .txt { position: relative; display: grid; gap: 20px; }
+  .txt h1 { max-width: 14ch; }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 24px; max-width: 60ch; }
+  .btn { justify-self: start; }
+</style>

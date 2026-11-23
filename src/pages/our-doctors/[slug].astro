@@ -1,0 +1,108 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TopoArt from '../../components/TopoArt.astro';
+import EnquiryForm from '../../components/EnquiryForm.astro';
+import CTABand from '../../components/CTABand.astro';
+import { doctors, fullName, type Doctor } from '../../data/doctors';
+import { topicByPath } from '../../data/topics';
+import { site, canShow } from '../../config/site';
+import { physicianSchema } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return doctors.map((d) => ({ params: { slug: d.slug }, props: { d } }));
+}
+interface Props { d: Doctor }
+const { d } = Astro.props;
+const path = `/our-doctors/${d.slug}/`;
+const crumbs = [{ name: 'Our Doctors', path: '/our-doctors/' }, { name: fullName(d), path }];
+const showQual = d.qualifications.status === 'confirmed' && d.qualifications.value;
+const showExpNote = d.experienceNote?.status === 'confirmed';
+const showYears = d.experienceYears && canShow(site.rajeevExperienceYears);
+const related = d.relatedPages.map((p) => ({ href: p, label: topicByPath(p)?.navLabel ?? p }));
+const others = doctors.filter((x) => x.slug !== d.slug);
+const ld = d.profileStatus === 'confirmed' ? [physicianSchema(d, path)] : [];
+---
+<Base title={d.metaTitle} description={d.metaDescription} path={path} crumbs={crumbs} ogType="profile" jsonLd={ld}>
+  <section class="frame head">
+    <div class="surface inner">
+      <div class="container grid2">
+        <div class="txt">
+          <Breadcrumbs crumbs={crumbs} />
+          <p class="eyebrow">{d.discipline}</p>
+          <h1>{fullName(d)}</h1>
+          <p class="role">{d.role}{showQual && <span class="qual">{d.qualifications.value}</span>}</p>
+          {showYears && <p class="years"><strong>{d.experienceYears}+</strong><span>years of dermatological experience</span></p>}
+          <div class="acts">
+            <a class="btn" href="#enquiry">Request an appointment <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="portrait" role="img" aria-label={`Portrait placeholder for ${fullName(d)}. An approved photograph will be added.`}>
+          <TopoArt class="art" seed={d.slug.length} rings={10} dot={false} />
+          <span class="mono" aria-hidden="true">{d.initials}</span>
+          <span class="ph glass">Photograph to follow</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container section--tight body">
+    <div class="prose main">
+      <h2>About {fullName(d)}</h2>
+      {d.summary.map((p) => <p>{p}</p>)}
+      {showExpNote && <p>{d.experienceNote!.value}</p>}
+      <h2>Areas of focus</h2>
+      <ul>{d.focusAreas.map((a) => <li>{a}</li>)}</ul>
+      <p class="small muted">Treatment availability and suitability are confirmed at consultation.</p>
+    </div>
+    <aside class="side" aria-label="Related treatments">
+      <div class="box">
+        <h2 class="side-h">Related pages</h2>
+        <ul>{related.map((r) => <li><a class="link-arrow" href={r.href}>{r.label} <span aria-hidden="true">→</span></a></li>)}</ul>
+      </div>
+    </aside>
+  </div>
+
+  <section class="container section--tight" id="enquiry" aria-labelledby="enq-h">
+    <div class="enq surface">
+      <div>
+        <h2 id="enq-h">Request an appointment with {fullName(d)}</h2>
+        <p class="muted">Send an enquiry and the clinic will contact you to arrange a time.</p>
+      </div>
+      <EnquiryForm preselectDoctor={fullName(d)} />
+    </div>
+  </section>
+
+  <nav class="container others" aria-label="Other consultants">
+    <h2 class="side-h">Other consultants</h2>
+    <ul>{others.map((o) => <li><a class="link-arrow" href={`/our-doctors/${o.slug}/`}>{fullName(o)} <span aria-hidden="true">→</span></a></li>)}</ul>
+  </nav>
+  <CTABand />
+</Base>
+
+<style>
+  .head { margin-top: 14px; }
+  .inner { padding: clamp(36px, 5vw, 72px) 0; overflow: hidden; }
+  .grid2 { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 80px); align-items: center; }
+  @media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+  .txt { display: grid; gap: 18px; }
+  .role { font-size: var(--fs-lede); margin: 0; color: var(--ink-soft); max-width: 40ch; }
+  .qual { display: block; margin-top: 6px; font-size: .95rem; color: var(--muted); }
+  .years { display: flex; align-items: center; gap: 14px; margin: 0; }
+  .years strong { font-size: clamp(2.6rem, 2rem + 2vw, 3.6rem); letter-spacing: -.03em; font-weight: 600; line-height: 1; }
+  .years span { color: var(--muted); max-width: 16ch; line-height: 1.35; }
+  .portrait { position: relative; aspect-ratio: 4 / 4.6; border-radius: calc(var(--r-lg) - 8px); overflow: hidden; background: linear-gradient(160deg, #F7F2EA, var(--sand-soft)); display: grid; place-items: center; }
+  .portrait :global(.art) { position: absolute; inset: 0; opacity: .8; }
+  .mono { position: relative; font-size: clamp(3.4rem, 2.6rem + 4vw, 6rem); letter-spacing: .08em; color: var(--champagne-ink); font-weight: 500; }
+  .ph { position: absolute; left: 14px; bottom: 14px; padding: 8px 14px; border-radius: 999px; font-size: .8rem; }
+  .body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); gap: clamp(32px, 5vw, 88px); align-items: start; }
+  @media (max-width: 900px) { .body { grid-template-columns: 1fr; } }
+  .main { max-width: 70ch; }
+  .box { background: var(--porcelain); border: 1px solid var(--line); border-radius: var(--r-md); padding: 22px; }
+  .box ul, .others ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .side-h { font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
+  .enq { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 64px); padding: clamp(24px, 4vw, 56px); }
+  @media (max-width: 900px) { .enq { grid-template-columns: 1fr; } }
+  .enq h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem); margin-bottom: 12px; }
+  .others ul { display: flex; flex-wrap: wrap; gap: 12px 28px; }
+</style>

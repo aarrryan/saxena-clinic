@@ -1,0 +1,88 @@
+---
+import { site, canShow, isLaunch, mapsDirectionsUrl } from '../config/site';
+import { specialities } from '../data/nav';
+import { doctors, fullName } from '../data/doctors';
+const year = new Date().getFullYear();
+const addr = canShow(site.address) ? site.address.value : null;
+const phones = site.phones.filter(canShow);
+const ig = canShow(site.instagram) ? site.instagram.value : null;
+const directions = mapsDirectionsUrl();
+---
+<footer class="site-footer" id="site-footer">
+  <div class="container">
+    <div class="top">
+      <div class="lead">
+        <p class="name">Saxena<br /><span>Skin and Cosmetic Clinic</span></p>
+        <p class="pos">A multidisciplinary specialist medical practice in Jabalpur, Madhya Pradesh.</p>
+        <a class="btn btn--sand" href="/contact-us/#enquiry">Request an appointment <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <nav class="cols" id="site-footer-nav" aria-label="Footer">
+        <div>
+          <h2>Specialities</h2>
+          <ul>{specialities.map((s) => <li><a href={s.href}>{s.label}</a></li>)}</ul>
+        </div>
+        <div>
+          <h2>Our doctors</h2>
+          <ul>{doctors.map((d) => <li><a href={`/our-doctors/${d.slug}/`}>{fullName(d)}</a></li>)}</ul>
+        </div>
+        <div>
+          <h2>Patients</h2>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about-us/">About us</a></li>
+            <li><a href="/conditions-we-treat/">Conditions we treat</a></li>
+            <li><a href="/patient-education/">Patient education</a></li>
+            <li><a href="/contact-us/">Contact &amp; appointments</a></li>
+            <li><a href="/privacy-policy/">Privacy policy</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Visit</h2>
+          <address>
+            {addr ? (<>{addr.streetAddress},<br />{addr.addressLocality}, {addr.addressRegion} {addr.postalCode}</>) : <>Jabalpur, Madhya Pradesh</>}
+          </address>
+          {phones.length > 0 && (
+            <ul class="phones">
+              {phones.map((p) => <li><a href={`tel:${p.value.e164}`} aria-label={`Call the clinic on ${p.value.display}`}>{p.value.display}</a></li>)}
+            </ul>
+          )}
+          <ul>
+            {directions && <li><a href={directions} rel="noopener" target="_blank">Get directions<span class="sr-only"> (opens Google Maps in a new tab)</span></a></li>}
+            {ig && <li><a href={ig.url} rel="noopener me" target="_blank">Instagram<span class="sr-only"> (opens in a new tab)</span></a></li>}
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <p class="disclaimer">The information on this website is general and educational. It does not replace a consultation, diagnosis or treatment by a qualified doctor. Treatment suitability and results vary between individuals. In an emergency, go to your nearest emergency department.</p>
+    <div class="bottom">
+      <p>© {year} {site.name}, Jabalpur.</p>
+      {!isLaunch && <p class="preview">Preview build — some details await clinic confirmation and this site is not indexed.</p>}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--ink); color: #E9E4DA; margin-top: var(--section); padding: clamp(56px, 7vw, 104px) 0 32px; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+  .top { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(32px, 5vw, 80px); }
+  @media (max-width: 980px) { .top { grid-template-columns: 1fr; } }
+  .name { font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; line-height: 1; margin-bottom: 18px; }
+  .name span { font-size: .45em; letter-spacing: .12em; color: #BDB5A8; }
+  .pos { color: #BDB5A8; max-width: 32ch; margin-bottom: 26px; }
+  .cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+  @media (max-width: 760px) { .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 420px) { .cols { grid-template-columns: 1fr; } }
+  h2 { font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; color: #A79F92; font-weight: 600; margin-bottom: 14px; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { margin-bottom: 4px; }
+  a { color: #F4F1EA; text-decoration: none; }
+  li > a, li > span { display: inline-flex; align-items: center; min-height: 28px; }
+  @media (pointer: coarse) { li { margin-bottom: 0; } li > a { min-height: 44px; } }
+  a:hover { text-decoration: underline; text-decoration-color: var(--champagne); }
+  address { font-style: normal; color: #D9D2C6; margin-bottom: 14px; line-height: 1.55; }
+  .phones { margin-bottom: 10px; color: #F4F1EA; }
+  .site-footer .btn--sand { color: var(--ink); }
+  .disclaimer { margin: clamp(40px, 5vw, 72px) 0 0; padding-top: 24px; border-top: 1px solid rgba(244,241,234,.14); color: #A79F92; font-size: .85rem; max-width: 110ch; }
+  .bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; color: #A79F92; font-size: .85rem; margin-top: 18px; }
+  .bottom p { margin: 0; }
+  .preview { color: #CDBB97; }
+</style>

@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CTABand from '../../components/CTABand.astro';
+import { articles, isPublishable, type Article } from '../../data/articles';
+import { topicByPath } from '../../data/topics';
+import { site } from '../../config/site';
+import { orgRef } from '../../lib/schema';
+
+/** Launch builds only generate articles that are fully approved (author, reviewer, dates, references). */
+export function getStaticPaths() {
+  const launch = import.meta.env.PUBLIC_SITE_MODE === 'launch';
+  return articles
+    .filter((a) => (launch ? isPublishable(a) : true))
+    .map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+interface Props { a: Article }
+const { a } = Astro.props;
+const path = `/patient-education/${a.slug}/`;
+const crumbs = [{ name: 'Patient Education', path: '/patient-education/' }, { name: a.title, path }];
+const fmt = (d: string | null) => (d ? new Date(d + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+const ld = isPublishable(a) ? [{
+  '@context': 'https://schema.org', '@type': 'MedicalWebPage', headline: a.title, description: a.metaDescription,
+  url: new URL(path, site.url).href, datePublished: a.published, dateModified: a.updated, inLanguage: 'en-IN',
+  author: { '@type': 'Person', name: a.author!.name }, reviewedBy: { '@type': 'Person', name: a.reviewer!.name },
+  lastReviewed: a.updated, publisher: orgRef(),
+}] : [];
+const related = a.related.map((p) => ({ href: p, label: topicByPath(p)?.navLabel ?? p }));
+---
+<Base title={`${a.title} | Saxena Skin and Cosmetic Clinic`} description={a.metaDescription} path={path} crumbs={crumbs} ogType="article" noindex={a.status !== 'published'} jsonLd={ld}>
+  <PageHeader eyebrow={`Patient education · ${a.category}`} title={a.title} lede={a.summary} crumbs={crumbs} seed={a.slug.length % 9} />
+  <article class="container section--tight">
+    {a.status === 'draft' && <p class="draft" role="note"><strong>Draft — not published.</strong> This article is awaiting clinical review and approval by the clinic. It is visible only in preview builds and is not indexed.</p>}
+    <div class="meta small muted">
+      {a.author ? <span>Written by {a.author.name}, {a.author.credentials}</span> : <span>Author: to be confirmed</span>}
+      {a.reviewer ? <span>Clinically reviewed by {a.reviewer.name}, {a.reviewer.credentials}</span> : <span>Clinical reviewer: to be confirmed</span>}
+      {a.published && <span>Published {fmt(a.published)}</span>}
+      {a.updated && <span>Updated {fmt(a.updated)}</span>}
+    </div>
+    <div class="prose body">
+      {a.body.map((b) => (<>{b.heading && <h2>{b.heading}</h2>}{b.paragraphs.map((p) => <p>{p}</p>)}</>))}
+      {a.references.length > 0 && (<><h2>References</h2><ol class="refs">{a.references.map((r) => <li><a href={r.url} rel="noopener" target="_blank">{r.title}</a></li>)}</ol></>)}
+      <p class="small muted disc">This article is general information and does not replace a consultation with a qualified doctor.</p>
+    </div>
+    <nav class="rel" aria-label="Related guides"><ul>{related.map((r) => <li><a class="link-arrow" href={r.href}>{r.label} <span aria-hidden="true">→</span></a></li>)}</ul></nav>
+  </article>
+  <CTABand />
+</Base>
+<style>
+  .draft { padding: 14px 18px; border-radius: var(--r-sm); border: 1px dashed var(--champagne); background: var(--porcelain); margin: 0 0 24px; font-size: .92rem; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+  .body { max-width: 70ch; }
+  .refs { padding-left: 1.2em; }
+  .disc { margin-top: 28px; }
+  .rel ul { list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 28px; }
+</style>

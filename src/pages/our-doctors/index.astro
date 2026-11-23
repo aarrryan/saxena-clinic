@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import DoctorCard from '../../components/DoctorCard.astro';
+import CTABand from '../../components/CTABand.astro';
+import { doctors } from '../../data/doctors';
+const crumbs = [{ name: 'Our Doctors', path: '/our-doctors/' }];
+---
+<Base title="Our Doctors — Five Specialist Consultants in Jabalpur | Saxena Clinic" description="Meet the five consultants at Saxena Skin and Cosmetic Clinic, Jabalpur: dermatology, laser dermatology, hair restoration, gynaecology and cranio-maxillofacial surgery." path="/our-doctors/" crumbs={crumbs}>
+  <PageHeader eyebrow="Our doctors" title="Five specialist consultants" lede="Complementary specialities in one practice — so patients can be assessed, and where needed referred, within the same clinic." crumbs={crumbs} />
+  <section class="container section--tight">
+    <ul class="grid" role="list">
+      {doctors.map((d) => <li><DoctorCard doctor={d} headingLevel="h2" /></li>)}
+    </ul>
+    <p class="small muted note">Approved photographs, qualifications and registration details will be added to each profile after verification by the clinic.</p>
+  </section>
+  <CTABand />
+</Base>
+<style>
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+  .note { margin-top: 24px; }
+</style>

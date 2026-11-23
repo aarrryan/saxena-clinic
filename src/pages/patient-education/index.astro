@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CTABand from '../../components/CTABand.astro';
+import { articles, plannedTopics, isPublishable } from '../../data/articles';
+import { topics } from '../../data/topics';
+import { isLaunch } from '../../config/site';
+const crumbs = [{ name: 'Patient Education', path: '/patient-education/' }];
+const visible = articles.filter((a) => (isLaunch ? isPublishable(a) : true));
+const guides = topics.filter((t) => t.kind !== 'speciality');
+---
+<Base title="Patient Education — Skin, Hair & Laser Guides | Saxena Skin and Cosmetic Clinic" description="Patient guides from Saxena Skin and Cosmetic Clinic, Jabalpur, on skin conditions, hair loss, scars and laser treatment — clear, balanced, and written for patients." path="/patient-education/" crumbs={crumbs}>
+  <PageHeader eyebrow="Patient education" title="Clear information, written for patients" lede="Balanced guides to common conditions and treatments. They explain options and expectations in general terms — your consultant will advise on what is right for you." crumbs={crumbs} seed={6} />
+
+  {visible.length > 0 && (
+    <section class="container section--tight" aria-labelledby="art-h">
+      <h2 id="art-h" class="h">Articles</h2>
+      <ul class="cards" role="list">
+        {visible.map((a) => (
+          <li><a class="card card--link" href={`/patient-education/${a.slug}/`}>
+            <span class="tag">{a.category}{a.status === 'draft' && ' · draft — awaiting clinical review'}</span>
+            <h3>{a.title}</h3><p class="muted small">{a.summary}</p><span class="more">Read <span aria-hidden="true">→</span></span>
+          </a></li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="container section--tight" aria-labelledby="g-h">
+    <h2 id="g-h" class="h">Condition and treatment guides</h2>
+    <ul class="cards" role="list">
+      {guides.map((g) => (
+        <li><a class="card card--link" href={g.path}>
+          <span class="tag">{g.kind === 'condition' ? 'Condition guide' : 'Treatment guide'}</span>
+          <h3>{g.h1}</h3><p class="muted small">{g.metaDescription}</p><span class="more">Read <span aria-hidden="true">→</span></span>
+        </a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="container section--tight" aria-labelledby="plan-h">
+    <h2 id="plan-h" class="h">Coming next</h2>
+    <p class="muted measure">These articles are being prepared. Each will be published with a named author, a named clinical reviewer, references and review dates.</p>
+    <div class="plan">
+      {plannedTopics.map((p) => (
+        <div><h3>{p.category}</h3><ul>{p.titles.map((t) => <li>{t}</li>)}</ul></div>
+      ))}
+    </div>
+  </section>
+  <CTABand />
+</Base>
+<style>
+  .h { font-size: clamp(1.4rem, 1.2rem + .9vw, 2rem); margin-bottom: 22px; }
+  .cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+  .cards .card { height: 100%; }
+  .cards h3, .cards p { margin: 0; }
+  .cards .tag { align-self: flex-start; white-space: normal; }
+  .plan { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 28px; margin-top: 24px; }
+  .plan h3 { font-size: 1rem; margin-bottom: 10px; }
+  .plan ul { list-style: none; padding: 0; margin: 0; color: var(--muted); font-size: .95rem; }
+  .plan li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+</style>

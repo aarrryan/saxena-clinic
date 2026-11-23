@@ -1,0 +1,302 @@
+---
+import Base from '../layouts/Base.astro';
+import TopoArt from '../components/TopoArt.astro';
+import DoctorCard from '../components/DoctorCard.astro';
+import DekaFeature from '../components/DekaFeature.astro';
+import ClinicImage from '../components/ClinicImage.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import CTABand from '../components/CTABand.astro';
+import ScrollFilm from '../components/ScrollFilm.astro';
+import { doctors } from '../data/doctors';
+import { specialities } from '../data/nav';
+import { articles, plannedTopics, isPublishable } from '../data/articles';
+import { site, canShow, isLaunch } from '../config/site';
+import { clinicSchema, websiteSchema } from '../lib/schema';
+
+const showYears = canShow(site.rajeevExperienceYears);
+const visibleArticles = articles.filter((a) => (isLaunch ? isPublishable(a) : true)).slice(0, 3);
+const guides = [
+  { label: 'Acne', href: '/dermatology/acne/', cat: 'Dermatology' },
+  { label: 'Psoriasis', href: '/dermatology/psoriasis/', cat: 'Dermatology' },
+  { label: 'Vitiligo', href: '/dermatology/vitiligo/', cat: 'Dermatology' },
+  { label: 'Hair loss in men and women', href: '/hair-clinic/hair-loss/', cat: 'Hair' },
+  { label: 'Acne scars', href: '/dermatology/acne-scars/', cat: 'Scars' },
+  { label: 'Melasma and pigmentation', href: '/dermatology/melasma-pigmentation/', cat: 'Dermatology' },
+];
+---
+<Base
+  title="Dermatologist & Skin Clinic in Jabalpur | Saxena Skin and Cosmetic Clinic"
+  description="Dermatology, hair transplantation, laser treatment, cosmetic dermatology, gynaecology and facial aesthetics in Jabalpur — five specialist consultants in one clinic."
+  path="/"
+  jsonLd={[clinicSchema(), websiteSchema()]}
+>
+  <!-- 2 · HERO -->
+  <section class="hero frame" aria-labelledby="hero-h">
+    <div class="hero-in surface">
+      <div class="hero-copy container">
+        <p class="eyebrow">Jabalpur · Madhya Pradesh</p>
+        <h1 id="hero-h" class="display">Specialist skin, hair &amp; <span class="accent">aesthetic care.</span></h1>
+        <p class="lede">A multidisciplinary team of specialist consultants bringing together dermatology, hair restoration, laser treatments, women’s health and facial aesthetics in Jabalpur.</p>
+        <div class="hero-actions">
+          <a class="btn" href="/contact-us/#enquiry">Request an appointment <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="/our-doctors/">Meet our doctors</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <TopoArt class="art" fluted seed={1} rings={14} cx={0.5} cy={0.48} />
+        {showYears && (
+          <div class="hero-badge glass">
+            <strong>40+</strong>
+            <span>years of dermatological experience<br /><em>Dr. Rajeev Saxena, senior consultant</em></span>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · TRUST STRIP -->
+  <section class="trust container" aria-label="At a glance">
+    <ul>
+      <li><strong>5</strong><span>specialist consultants under one roof</span></li>
+      {showYears && <li><strong>40+ yrs</strong><span>dermatological experience — Dr. Rajeev Saxena</span></li>}
+      <li><strong>DEKA</strong><span>Italian fractional CO2 laser technology</span></li>
+      <li><strong>Jabalpur</strong><span>Madhya Pradesh</span></li>
+    </ul>
+  </section>
+
+  <!-- 3b · IDENTITY FILM — pinned full screen, advances with the visitor's scroll -->
+  <ScrollFilm />
+
+  <!-- 4 · INTRODUCTION -->
+  <section class="section container intro" aria-labelledby="intro-h">
+    <div class="split">
+      <p class="eyebrow">The clinic</p>
+      <div data-reveal>
+        <h2 id="intro-h" class="intro-h">One specialist practice for skin, hair, women’s health and the face.</h2>
+        <p class="lede">Saxena Skin and Cosmetic Clinic is a multidisciplinary specialist medical practice in Jabalpur, bringing together expertise in clinical and cosmetic dermatology, laser treatments, hair transplantation, gynaecology, and cranio-maxillofacial surgery and facial aesthetics.</p>
+        <p class="muted measure">Five consultants with complementary specialities work side by side, so patients can be assessed and, where needed, referred within the same practice. Every treatment begins with a proper medical assessment.</p>
+        <a class="link-arrow" href="/about-us/">About the clinic <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · CONSULTANTS -->
+  <section class="section--tight container" aria-labelledby="docs-h">
+    <div class="sec-head">
+      <h2 id="docs-h">Our five consultants</h2>
+      <a class="link-arrow" href="/our-doctors/">All doctors <span aria-hidden="true">→</span></a>
+    </div>
+    <ul class="docs" role="list">
+      {doctors.map((d) => <li data-reveal><DoctorCard doctor={d} /></li>)}
+    </ul>
+  </section>
+
+  <!-- 6 · SPECIALITIES -->
+  <section class="section container" aria-labelledby="spec-h">
+    <div class="sec-head">
+      <h2 id="spec-h">Specialities</h2>
+      <a class="link-arrow" href="/conditions-we-treat/">Conditions we treat <span aria-hidden="true">→</span></a>
+    </div>
+    <ul class="specs" role="list">
+      {specialities.map((s, i) => (
+        <li data-reveal>
+          <a class="spec card card--link" href={s.href}>
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.label}</h3>
+            <p class="muted">{s.blurb}</p>
+            <span class="more">Explore <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- 7 · DERMATOLOGY -->
+  <section class="frame" aria-labelledby="derm-h">
+    <div class="surface band">
+      <div class="container split">
+        <div data-reveal>
+          <p class="eyebrow">Dermatology</p>
+          <h2 id="derm-h">Clinical dermatology, led by experience.</h2>
+        </div>
+        <div data-reveal>
+          <p class="lede">Accurate diagnosis first. Our dermatologists assess and manage common and complex skin conditions, with treatment plans that change as your skin responds.</p>
+          <ul class="chips" role="list">
+            <li><a href="/dermatology/acne/">Acne</a></li><li><a href="/dermatology/psoriasis/">Psoriasis</a></li>
+            <li><a href="/dermatology/vitiligo/">Vitiligo</a></li><li><a href="/dermatology/eczema/">Eczema</a></li>
+            <li><a href="/dermatology/melasma-pigmentation/">Melasma &amp; pigmentation</a></li><li><a href="/dermatology/acne-scars/">Acne scars</a></li>
+          </ul>
+          <a class="btn btn--ghost" href="/dermatology/">Dermatology at the clinic <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · HAIR -->
+  <section class="section container" aria-labelledby="hair-h">
+    <div class="split">
+      <div data-reveal>
+        <p class="eyebrow">Hair clinic</p>
+        <h2 id="hair-h">Hair restoration and hair transplantation.</h2>
+      </div>
+      <div class="two" data-reveal>
+        <div class="card">
+          <h3>Medical hair restoration</h3>
+          <p class="muted">Evaluation of hair loss in men and women — pattern hair loss, alopecia areata, telogen effluvium and scalp conditions — and medical treatment.</p>
+          <a class="link-arrow" href="/hair-clinic/hair-loss/">Hair loss <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="card">
+          <h3>Hair transplantation</h3>
+          <p class="muted">Candidate evaluation, hairline planning and post-transplant care, with Dr. Nischay Saxena, dermatologist.</p>
+          <a class="link-arrow" href="/hair-clinic/hair-transplantation/">Hair transplantation <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · LASER (DEKA) -->
+  <div class="container"><DekaFeature /></div>
+
+  <!-- 10 · COSMETIC DERMATOLOGY -->
+  <section class="section container" aria-labelledby="cos-h">
+    <div class="cos">
+      <div class="cos-img" data-reveal><ClinicImage name="treatment-preparation" sizes="(min-width: 900px) 30vw, 100vw" /></div>
+      <div data-reveal>
+        <p class="eyebrow">Cosmetic dermatology</p>
+        <h2 id="cos-h">Aesthetic treatment, grounded in dermatology.</h2>
+        <p class="lede">Scars, skin quality, pigmentation and the changes of ageing — assessed by a dermatologist, with natural results and honest advice about what each treatment can achieve.</p>
+        <a class="btn btn--ghost" href="/cosmetic-dermatology/">Cosmetic dermatology <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · WOMEN'S HEALTH  &  12 · FACE -->
+  <section class="container pair" aria-label="Women’s health and facial surgery">
+    <article class="card big" data-reveal>
+      <p class="eyebrow">Women’s health</p>
+      <h2>Gynaecology and cosmetic gynaecology</h2>
+      <p class="muted">Private consultations with Dr. Amita Saxena for general gynaecology, menstrual health, menopause-related concerns, intimate health and cosmetic gynaecology.</p>
+      <div class="links"><a class="link-arrow" href="/gynaecology/">Gynaecology <span aria-hidden="true">→</span></a><a class="link-arrow" href="/cosmetic-gynaecology/">Cosmetic gynaecology <span aria-hidden="true">→</span></a></div>
+    </article>
+    <article class="card big" data-reveal>
+      <p class="eyebrow">Face</p>
+      <h2>Maxillofacial surgery and facial aesthetics</h2>
+      <p class="muted">Dr. Jigisha Chhangani, cranio-maxillofacial surgeon, assesses facial asymmetry, deformity and trauma, and advises on surgical and non-surgical facial aesthetics.</p>
+      <div class="links"><a class="link-arrow" href="/cranio-maxillofacial-surgery/">Maxillofacial surgery <span aria-hidden="true">→</span></a><a class="link-arrow" href="/facial-aesthetics/">Facial aesthetics <span aria-hidden="true">→</span></a></div>
+    </article>
+  </section>
+
+  <!-- 13 · GALLERY -->
+  <section class="section container" aria-labelledby="gal-h">
+    <div class="sec-head">
+      <h2 id="gal-h">Inside the clinic</h2>
+      <p class="muted small gal-note">Stills from the clinic’s own footage. Professional photography to follow.</p>
+    </div>
+    <ul class="gallery" role="list">
+      <li data-reveal><figure><ClinicImage name="laser-console" sizes="(min-width: 900px) 30vw, 100vw" /><figcaption>DEKA fractional CO2 laser system</figcaption></figure></li>
+      <li data-reveal><figure><ClinicImage name="laser-controls" sizes="(min-width: 900px) 30vw, 100vw" /><figcaption>Laser safety controls</figcaption></figure></li>
+      <li data-reveal><figure><ClinicImage name="treatment-preparation" sizes="(min-width: 900px) 30vw, 100vw" /><figcaption>Treatment preparation</figcaption></figure></li>
+    </ul>
+  </section>
+
+  <!-- 14 · PATIENT EDUCATION -->
+  <section class="frame" aria-labelledby="edu-h">
+    <div class="surface band">
+      <div class="container">
+        <div class="sec-head">
+          <h2 id="edu-h">Patient education</h2>
+          <a class="link-arrow" href="/patient-education/">All guides <span aria-hidden="true">→</span></a>
+        </div>
+        <ul class="guides" role="list">
+          {visibleArticles.map((a) => (
+            <li><a class="card card--link" href={`/patient-education/${a.slug}/`}>
+              <span class="tag">{a.category}{a.status === 'draft' && ' · draft'}</span>
+              <h3>{a.title}</h3><p class="muted small">{a.summary}</p><span class="more">Read <span aria-hidden="true">→</span></span>
+            </a></li>
+          ))}
+          {guides.slice(0, 6 - visibleArticles.length).map((g) => (
+            <li><a class="card card--link" href={g.href}>
+              <span class="tag">{g.cat} · condition guide</span>
+              <h3>{g.label}</h3><span class="more">Read the guide <span aria-hidden="true">→</span></span>
+            </a></li>
+          ))}
+        </ul>
+        {isLaunch && visibleArticles.length === 0 && <p class="muted small">Articles on {plannedTopics.map((p) => p.category.toLowerCase()).join(', ')} are being prepared and will be published after clinical review.</p>}
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 · CONTACT & LOCATION -->
+  <section class="section container" aria-label="Contact and location">
+    <ContactPanel />
+  </section>
+
+  <!-- 16 · CTA -->
+  <CTABand />
+</Base>
+
+<style>
+  .hero { margin-top: 14px; }
+  .hero-in { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); min-height: min(86vh, 860px); overflow: hidden; }
+  @media (max-width: 980px) { .hero-in { grid-template-columns: 1fr; min-height: 0; } }
+  .hero-copy { display: grid; align-content: center; gap: 24px; padding-block: clamp(56px, 8vw, 120px); max-width: none; }
+  .hero-copy .display { max-width: 11ch; }
+  .hero-copy .lede { margin: 0; max-width: 46ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-art { position: relative; margin: clamp(10px, 1.2vw, 16px); border-radius: calc(var(--r-lg) - 8px); overflow: hidden; background: linear-gradient(160deg, #F7F2EA 0%, var(--sand-soft) 100%); min-height: 380px; }
+  .hero-art :global(.art) { position: absolute; inset: 0; }
+  .hero-badge { position: absolute; left: clamp(14px, 2vw, 24px); bottom: clamp(14px, 2vw, 24px); display: flex; align-items: center; gap: 14px; padding: 14px 20px 14px 16px; border-radius: 22px; max-width: calc(100% - 28px); }
+  .hero-badge strong { font-size: 2.1rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; }
+  .hero-badge span { font-size: .86rem; line-height: 1.35; }
+  .hero-badge em { font-style: normal; color: var(--muted); }
+
+  .trust ul { list-style: none; margin: 0; padding: clamp(28px, 3vw, 40px) 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 0; }
+  .trust li { display: grid; gap: 4px; padding: 18px 20px 18px 0; border-top: 1px solid var(--line-strong); }
+  .trust strong { font-size: clamp(1.5rem, 1.2rem + 1vw, 2.1rem); font-weight: 600; letter-spacing: -.02em; }
+  .trust span { color: var(--muted); font-size: .92rem; }
+
+  .intro-h { font-size: var(--fs-h2); margin-bottom: 22px; max-width: 20ch; }
+  .sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; margin-bottom: clamp(24px, 3vw, 40px); }
+  .docs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 1200px) { .docs { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 760px) { .docs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 480px) { .docs { grid-template-columns: 1fr; } }
+  .specs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 1100px) { .specs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .specs { grid-template-columns: 1fr; } }
+  .spec { height: 100%; min-height: 220px; }
+  @media (max-width: 520px) { .spec { min-height: 0; } }
+  .spec .num { font-size: .78rem; letter-spacing: .14em; color: var(--champagne-ink); font-weight: 600; }
+  .spec p { margin: 0; font-size: .95rem; }
+  .band { padding-block: clamp(56px, 7vw, 112px); }
+  .band h2 { max-width: 14ch; }
+  .chips { list-style: none; margin: 0 0 26px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips a { display: inline-block; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line-strong); text-decoration: none; font-size: .95rem; background: var(--ivory); }
+  .chips a:hover { border-color: var(--ink); }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+  .two .card { display: grid; gap: 12px; align-content: start; }
+  .two p { margin: 0; }
+  .cos { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: center; }
+  @media (max-width: 860px) { .cos { grid-template-columns: 1fr; } }
+  .cos-img { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 3.6; }
+  .cos-img :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .cos h2 { margin: 14px 0 18px; max-width: 16ch; }
+  .cos .lede { margin-bottom: 24px; }
+  .pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 16px; }
+  .big { display: grid; gap: 14px; align-content: start; padding: clamp(28px, 4vw, 48px); }
+  .big h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem); }
+  .big p { margin: 0; }
+  .links { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+  .gal-note { margin: 0; }
+  .gallery { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 760px) { .gallery { grid-template-columns: 1fr; } }
+  .gallery figure { margin: 0; display: grid; gap: 10px; }
+  .gallery :global(img) { width: 100%; aspect-ratio: 4 / 3.4; object-fit: cover; border-radius: var(--r-md); }
+  .gallery figcaption { font-size: .9rem; color: var(--muted); }
+  .guides { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 900px) { .guides { grid-template-columns: 1fr; } }
+  .guides .card { height: 100%; background: var(--ivory); }
+  .guides h3 { margin: 0; }
+  .guides p { margin: 0; }
+  .guides .tag { align-self: flex-start; }
+</style>

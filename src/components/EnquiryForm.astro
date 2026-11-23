@@ -1,0 +1,117 @@
+---
+import { SPECIALITY_OPTIONS, DOCTOR_OPTIONS, TIME_OPTIONS } from '../lib/enquiry';
+interface Props { preselectDoctor?: string }
+const { preselectDoctor } = Astro.props;
+const today = new Date().toISOString().slice(0, 10);
+---
+<form class="enquiry" method="post" action="/api/enquiry/" data-enquiry novalidate aria-describedby="enq-intro">
+  <div class="summary" data-summary role="alert" tabindex="-1" aria-labelledby="enq-sum-h" hidden><h2 id="enq-sum-h">There is a problem</h2><ul></ul></div>
+  <p id="enq-intro" class="intro">This is an <strong>appointment enquiry</strong>, not a confirmed booking. The clinic will contact you to arrange a time. Fields marked <span aria-hidden="true">*</span><span class="sr-only">with an asterisk</span> are required.</p>
+
+  <div class="row">
+    <div class="field">
+      <label for="enq-name">Full name <span aria-hidden="true">*</span></label>
+      <input id="enq-name" name="name" type="text" autocomplete="name" required maxlength="80" aria-describedby="enq-name-err" />
+      <p class="err" id="enq-name-err" data-error-for="name"></p>
+    </div>
+    <div class="field">
+      <label for="enq-phone">Phone number <span aria-hidden="true">*</span></label>
+      <input id="enq-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20" aria-describedby="enq-phone-err" />
+      <p class="err" id="enq-phone-err" data-error-for="phone"></p>
+    </div>
+  </div>
+  <div class="field">
+    <label for="enq-email">Email <span class="opt">(optional)</span></label>
+    <input id="enq-email" name="email" type="email" autocomplete="email" maxlength="120" aria-describedby="enq-email-err" />
+    <p class="err" id="enq-email-err" data-error-for="email"></p>
+  </div>
+  <div class="row">
+    <div class="field">
+      <label for="enq-spec">Speciality <span aria-hidden="true">*</span></label>
+      <select id="enq-spec" name="speciality" required aria-describedby="enq-spec-err">
+        <option value="">Choose a speciality</option>
+        {SPECIALITY_OPTIONS.map((o) => <option value={o}>{o}</option>)}
+      </select>
+      <p class="err" id="enq-spec-err" data-error-for="speciality"></p>
+    </div>
+    <div class="field">
+      <label for="enq-doc">Preferred doctor <span class="opt">(optional)</span></label>
+      <select id="enq-doc" name="doctor" aria-describedby="enq-doc-err">
+        {DOCTOR_OPTIONS.map((o) => <option value={o === 'No preference' ? '' : o} selected={o === preselectDoctor}>{o}</option>)}
+      </select>
+      <p class="err" id="enq-doc-err" data-error-for="doctor"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <label for="enq-date">Preferred date <span class="opt">(optional)</span></label>
+      <input id="enq-date" name="preferredDate" type="date" min={today} aria-describedby="enq-date-err" />
+      <p class="err" id="enq-date-err" data-error-for="preferredDate"></p>
+    </div>
+    <div class="field">
+      <label for="enq-time">Preferred time <span class="opt">(optional)</span></label>
+      <select id="enq-time" name="preferredTime" aria-describedby="enq-time-err">
+        <option value="">No preference</option>
+        {TIME_OPTIONS.map((o) => <option value={o}>{o}</option>)}
+      </select>
+      <p class="err" id="enq-time-err" data-error-for="preferredTime"></p>
+    </div>
+  </div>
+  <div class="field">
+    <label for="enq-msg">Anything we should know to arrange your visit? <span class="opt">(optional)</span></label>
+    <textarea id="enq-msg" name="message" rows="3" maxlength="500" aria-describedby="enq-msg-hint enq-msg-err"></textarea>
+    <p class="hint" id="enq-msg-hint">Please don’t include detailed medical information — you can discuss this privately with the doctor.</p>
+    <p class="err" id="enq-msg-err" data-error-for="message"></p>
+  </div>
+
+  <div class="hp" aria-hidden="true">
+    <label for="enq-website">Leave this field empty</label>
+    <input id="enq-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+  <input type="hidden" name="started" value="" />
+
+  <div class="field consent">
+    <input id="enq-consent" name="consent" type="checkbox" value="yes" required aria-describedby="enq-consent-err" />
+    <label for="enq-consent">I agree that Saxena Skin and Cosmetic Clinic may use these details to contact me about this enquiry, as described in the <a href="/privacy-policy/">privacy policy</a>. <span aria-hidden="true">*</span></label>
+    <p class="err" id="enq-consent-err" data-error-for="consent"></p>
+  </div>
+
+  <div class="foot">
+    <button class="btn" type="submit">Send enquiry <span class="arrow" aria-hidden="true">→</span></button>
+    <p class="status" data-status role="status" aria-live="polite" tabindex="-1"></p>
+  </div>
+  <noscript><p class="hint">Online enquiries need JavaScript. Please contact the clinic directly using the details on this page.</p></noscript>
+</form>
+
+<style>
+  .enquiry { display: grid; gap: 18px; }
+  .intro { margin: 0; padding: 14px 16px; border-radius: var(--r-sm); background: var(--ivory); font-size: .92rem; color: var(--ink-soft); }
+  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 18px; }
+  .field { display: grid; gap: 6px; }
+  label { font-weight: 500; font-size: .95rem; }
+  .opt { color: var(--muted); font-weight: 400; }
+  input[type='text'], input[type='tel'], input[type='email'], input[type='date'], select, textarea {
+    width: 100%; min-height: 50px; padding: 12px 14px; border-radius: var(--r-sm); border: 1px solid var(--line-strong); background: #fff;
+    font: 400 1rem/1.4 var(--font); color: var(--ink); transition: border-color .2s, box-shadow .2s; }
+  textarea { resize: vertical; min-height: 96px; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(18,95,90,.18); }
+  [aria-invalid='true'] { border-color: var(--danger) !important; }
+  .err { margin: 0; min-height: 0; color: var(--danger); font-size: .86rem; }
+  .err:empty { display: none; }
+  .hint { margin: 0; color: var(--muted); font-size: .86rem; }
+  .consent { grid-template-columns: auto 1fr; align-items: start; column-gap: 12px; }
+  .consent input { width: 24px; height: 24px; margin-top: 2px; accent-color: var(--ink); }
+  .consent label { font-weight: 400; font-size: .92rem; line-height: 1.5; }
+  .consent .err { grid-column: 2; }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+  .status { margin: 0; font-size: .95rem; flex: 1 1 260px; }
+  .status[data-state='success'] { color: var(--ok); }
+  .status[data-state='error'] { color: var(--danger); }
+  .status:focus { outline: none; }
+  .summary { padding: 16px 18px; border: 2px solid var(--danger); border-radius: var(--r-sm); background: #fff; }
+  .summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  .summary h2 { font-size: 1.05rem; margin: 0 0 8px; color: var(--danger); }
+  .summary ul { margin: 0; padding-left: 1.1em; }
+  .summary a { color: var(--danger); }
+</style>

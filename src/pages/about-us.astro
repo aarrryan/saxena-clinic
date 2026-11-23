@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import DoctorCard from '../components/DoctorCard.astro';
+import DekaFeature from '../components/DekaFeature.astro';
+import FilmPlayer from '../components/FilmPlayer.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import CTABand from '../components/CTABand.astro';
+import { doctors } from '../data/doctors';
+import { site, canShow } from '../config/site';
+const crumbs = [{ name: 'About Us', path: '/about-us/' }];
+const showYears = canShow(site.rajeevExperienceYears);
+---
+<Base title="About Us — Multidisciplinary Specialist Clinic in Jabalpur | Saxena Clinic" description="Saxena Skin and Cosmetic Clinic is a multidisciplinary specialist medical practice in Jabalpur for dermatology, hair, lasers, gynaecology and facial aesthetics." path="/about-us/" crumbs={crumbs}>
+  <PageHeader eyebrow="About us" title="A multidisciplinary specialist practice in Jabalpur" crumbs={crumbs} seed={3} />
+
+  <section class="container section--tight">
+    <div class="split">
+      <p class="eyebrow">Who we are</p>
+      <div class="prose">
+        <p class="lede">Saxena Skin and Cosmetic Clinic is a multidisciplinary specialist medical practice in Jabalpur, bringing together expertise in dermatology, clinical and cosmetic dermatology, laser treatments, hair transplantation, gynaecology, and cranio-maxillofacial surgery and facial aesthetics.</p>
+        <p>With five specialist consultants{showYears && <> and more than four decades of dermatological experience within the practice — through our senior consultant, Dr. Rajeev Saxena —</>} our aim is to provide comprehensive, personalised and evidence-based care across skin, hair, women’s health and facial aesthetics.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section--tight">
+    <div class="split">
+      <p class="eyebrow">How we work</p>
+      <div class="values">
+        <div><h2 class="vh">Diagnosis before treatment</h2><p class="muted">Every treatment — medical or aesthetic — begins with a proper assessment by a specialist.</p></div>
+        <div><h2 class="vh">Honest expectations</h2><p class="muted">We explain what a treatment can and cannot achieve, including its risks, before you decide.</p></div>
+        <div><h2 class="vh">Specialists who work together</h2><p class="muted">Five consultants with complementary specialities can assess and refer within one practice.</p></div>
+        <div><h2 class="vh">Privacy and dignity</h2><p class="muted">Consultations are confidential, and sensitive concerns are handled with care.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section--tight" aria-labelledby="film-h">
+    <div class="split">
+      <div><p class="eyebrow">Identity</p><h2 id="film-h" class="vh2">Expertise, in motion</h2></div>
+      <FilmPlayer autoplay />
+    </div>
+  </section>
+
+  <section class="container section--tight" aria-labelledby="team-h">
+    <h2 id="team-h" class="vh2">Our consultants</h2>
+    <ul class="docs" role="list">{doctors.map((d) => <li><DoctorCard doctor={d} /></li>)}</ul>
+  </section>
+
+  <div class="container section--tight"><DekaFeature /></div>
+
+  <section class="container section--tight" aria-labelledby="fac-h">
+    <div class="split">
+      <p class="eyebrow">Facilities</p>
+      <div class="prose">
+        <h2 id="fac-h" class="vh2">Clinic facilities</h2>
+        <p>The clinic houses consultation rooms and treatment facilities for dermatology, laser and procedural care, including a fractional CO2 laser system using Italian DEKA technology.</p>
+        <p class="small muted">Further details of the clinic’s history, infrastructure and accessibility will be added once confirmed by the clinic, together with professional photography of the premises.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section--tight" aria-label="Location"><ContactPanel /></section>
+  <CTABand />
+</Base>
+<style>
+  .values { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 28px 40px; }
+  .vh { font-size: 1.2rem; margin-bottom: 8px; letter-spacing: -.01em; }
+  .values p { margin: 0; }
+  .vh2 { font-size: var(--fs-h2); margin-bottom: 18px; max-width: 16ch; }
+  .docs { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 16px; }
+</style>

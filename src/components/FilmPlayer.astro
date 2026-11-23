@@ -1,0 +1,30 @@
+---
+/**
+ * The clinic's identity film (supplied as reference-assets/saxena-motion-film.html, copied unchanged to /media/).
+ * Default: a static poster until the visitor chooses to play. With `autoplay` (homepage and About, at the client's
+ * request), the film plays silently as soon as it is scrolled into view, pauses when scrolled away and restarts when
+ * it comes back. It never plays sound by itself: sound starts only on a click inside the player.
+ */
+import { Picture } from 'astro:assets';
+import poster from '../assets/brand/identity-film-poster.png';
+interface Props { autoplay?: boolean }
+const { autoplay = false } = Astro.props;
+---
+<figure class="film">
+  <div class="frame16" data-embed-wrap data-autoplay={autoplay ? '' : undefined}>
+    <Picture src={poster} alt="Saxena Skin and Cosmetic Clinic identity film — closing frame with the clinic’s logo and the line Specialist care. Advanced expertise." formats={['avif', 'webp']} fallbackFormat="jpg" quality={80} widths={[640, 960, 1440]} sizes="(min-width: 1100px) 1000px, 100vw" loading="lazy" class="poster" />
+    <button type="button" class="play glass" data-embed="/media/identity-film.html" data-title="Saxena Skin and Cosmetic Clinic identity film (18 seconds)" data-allow="autoplay; fullscreen">
+      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2.5l9 5.5-9 5.5z" fill="currentColor" /></svg>
+      Play the identity film <span class="muted small">18 s</span>
+    </button>
+  </div>
+  <figcaption class="small muted">{autoplay ? 'The clinic’s identity film plays silently. Tap the film to turn the sound on.' : 'The clinic’s identity film. Sound is off until you turn it on inside the player.'}</figcaption>
+</figure>
+<style>
+  .film { margin: 0; display: grid; gap: 12px; }
+  .frame16 { position: relative; aspect-ratio: 16 / 9; border-radius: var(--r-md); overflow: hidden; background: #F6F3ED; }
+  .frame16 :global(img.poster), .frame16 :global(picture) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .frame16 :global(iframe) { z-index: 2; position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font: 500 .98rem/1 var(--font); color: var(--ink); cursor: pointer; }
+  .play:hover { background: var(--porcelain); }
+</style>

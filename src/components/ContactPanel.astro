@@ -1,0 +1,69 @@
+---
+import { site, canShow, canLink, mapsDirectionsUrl } from '../config/site';
+interface Props { headingLevel?: 'h2' | 'h3' }
+const { headingLevel = 'h2' } = Astro.props;
+const H = headingLevel;
+const addr = canShow(site.address) ? site.address.value : null;
+const phones = site.phones.filter(canShow);
+const whatsapp = canLink(site.whatsapp) ? (site.whatsapp.value as string) : null;
+const email = canShow(site.email) ? site.email.value : null;
+const hours = canShow(site.hours) ? site.hours.value : null;
+const directions = mapsDirectionsUrl();
+const mapQuery = addr ? `${site.name}, ${addr.streetAddress}, ${addr.addressLocality} ${addr.postalCode}` : null;
+const mapEmbed = mapQuery ? `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed` : null;
+---
+<div class="contact">
+  <div class="details">
+    <H class="h">Visit the clinic</H>
+    <dl>
+      <div>
+        <dt>Address</dt>
+        <dd>
+          {addr ? <address>{site.name}<br />{addr.streetAddress}<br />{addr.addressLocality}, {addr.addressRegion} {addr.postalCode}</address> : <span>Jabalpur, Madhya Pradesh</span>}
+        </dd>
+      </div>
+      {phones.length > 0 && (
+        <div>
+          <dt>Telephone</dt>
+          <dd>{phones.map((p) => <span class="line"><a href={`tel:${p.value.e164}`} aria-label={`Call the clinic on ${p.value.display}`}>{p.value.display}</a></span>)}</dd>
+        </div>
+      )}
+      {whatsapp && (<div><dt>WhatsApp</dt><dd><a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`} rel="noopener" target="_blank">Message us on WhatsApp</a></dd></div>)}
+      {email && (<div><dt>Email</dt><dd><a href={`mailto:${email}`}>{email}</a></dd></div>)}
+      <div>
+        <dt>Clinic hours</dt>
+        <dd>{hours ?? 'Please call the clinic for consultation timings.'}</dd>
+      </div>
+    </dl>
+    <div class="acts">
+    {phones[0] && <a class="btn" href={`tel:${phones[0].value.e164}`}>Call the clinic <span class="sr-only">on {phones[0].value.display}</span></a>}
+    {directions && <a class="btn btn--ghost" href={directions} rel="noopener" target="_blank">Get directions <span class="arrow" aria-hidden="true">↗</span><span class="sr-only"> (opens Google Maps in a new tab)</span></a>}
+    </div>
+  </div>
+  {mapEmbed && (
+    <div class="map" data-embed-wrap>
+      <div class="map-cover">
+        <p>The map is provided by Google. Loading it shares your IP address with Google.</p>
+        <button type="button" class="btn" data-embed={mapEmbed} data-title="Map showing the location of Saxena Skin and Cosmetic Clinic, Jabalpur">Show map</button>
+      </div>
+    </div>
+  )}
+</div>
+<style>
+  .contact { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(20px, 3vw, 40px); align-items: stretch; }
+  @media (max-width: 860px) { .contact { grid-template-columns: 1fr; } }
+  .details { display: grid; gap: 22px; align-content: start; }
+  .h { font-size: var(--fs-h2); }
+  dl { margin: 0; display: grid; gap: 18px; }
+  dt { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  dd { margin: 0; font-size: 1.05rem; }
+  address { font-style: normal; line-height: 1.55; }
+  .line { display: block; }
+  .acts { display: flex; flex-wrap: wrap; gap: 12px; }
+  dd a { text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+  dd a:hover { border-color: var(--ink); }
+  .map { min-height: 340px; border-radius: var(--r-md); overflow: hidden; background: linear-gradient(145deg, var(--sand-soft), var(--ivory)); border: 1px solid var(--line); display: grid; }
+  .map :global(iframe) { width: 100%; height: 100%; min-height: 340px; border: 0; }
+  .map-cover { display: grid; place-content: center; justify-items: center; gap: 14px; padding: 24px; text-align: center; }
+  .map-cover p { margin: 0; max-width: 36ch; color: var(--muted); font-size: .92rem; }
+</style>

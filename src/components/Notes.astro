@@ -1,0 +1,23 @@
+---
+/** Availability and clinical-review notices for medical content pages. */
+import type { Availability } from '../data/topics';
+import { isLaunch } from '../config/site';
+interface Props { availability: Availability; review: { status: 'pending' | 'approved'; reviewer?: string; date?: string } }
+const { availability, review } = Astro.props;
+const fmt = (d?: string) => (d ? new Date(d + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+---
+<aside class="notes" aria-label="About this page">
+  {availability === 'to-confirm' && (
+    <p class="note note--avail"><strong>Availability.</strong> This page explains the treatment in general terms. Please ask the clinic whether it is currently offered and whether it is suitable for you.</p>
+  )}
+  <p class="note">
+    <strong>Medical information.</strong> This page is for general education and does not replace a consultation. Treatment suitability and results vary between individuals.
+    {review.status === 'approved' && review.reviewer ? <> Clinically reviewed by {review.reviewer}{review.date && <>, {fmt(review.date)}</>}.</> : !isLaunch ? <span class="pending"> Content status: awaiting clinical review by the clinic’s consultants.</span> : null}
+  </p>
+</aside>
+<style>
+  .notes { display: grid; gap: 10px; margin-top: clamp(32px, 4vw, 48px); }
+  .note { margin: 0; padding: 16px 18px; border-radius: var(--r-sm); background: var(--ivory); border: 1px solid var(--line); font-size: .9rem; color: var(--ink-soft); line-height: 1.55; }
+  .note--avail { background: var(--porcelain); border-style: dashed; border-color: var(--champagne); }
+  .pending { color: var(--champagne-ink); }
+</style>

@@ -1,0 +1,135 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import DekaFeature from '../components/DekaFeature.astro';
+import ClinicImage from '../components/ClinicImage.astro';
+import Notes from '../components/Notes.astro';
+import CTABand from '../components/CTABand.astro';
+import { topics, topicByPath, childrenOf, type Topic } from '../data/topics';
+import { doctorBySlug, fullName } from '../data/doctors';
+import { medicalPageSchema } from '../lib/schema';
+
+export function getStaticPaths() {
+  return topics.map((t) => ({ params: { slug: t.path.replace(/^\/|\/$/g, '') }, props: { topic: t } }));
+}
+interface Props { topic: Topic }
+const { topic: t } = Astro.props;
+const parent = t.parent ? topicByPath(t.parent) : undefined;
+const crumbs = [...(parent ? [{ name: parent.navLabel, path: parent.path }] : []), { name: t.navLabel, path: t.path }];
+const docs = t.doctors.map(doctorBySlug).filter((d): d is NonNullable<typeof d> => Boolean(d));
+const children = childrenOf(t.path);
+const related = t.related.map((p) => {
+  const tp = topicByPath(p);
+  if (tp) return { href: p, label: tp.navLabel };
+  const d = docs.find((x) => p === `/our-doctors/${x.slug}/`) ?? doctorBySlug(p.split('/')[2] ?? '');
+  if (d) return { href: p, label: fullName(d) };
+  const map: Record<string, string> = { '/conditions-we-treat/': 'Conditions we treat', '/patient-education/': 'Patient education', '/contact-us/': 'Contact & appointments' };
+  return { href: p, label: map[p] ?? p };
+});
+const schema = medicalPageSchema(t.h1, t.metaDescription, t.path, t.kind === 'condition' ? t.h1 : undefined);
+---
+<Base title={t.metaTitle} description={t.metaDescription} path={t.path} crumbs={crumbs} jsonLd={[schema]}>
+  <PageHeader eyebrow={t.eyebrow} title={t.h1} lede={t.lede} crumbs={crumbs} seed={t.path.length % 7} />
+
+  <div class="container section--tight body">
+    <article class="prose main">
+      {t.sections.map((s) => (
+        <section aria-labelledby={`s-${s.id}`}>
+          <h2 id={`s-${s.id}`}>{s.heading}</h2>
+          {s.listIntro && <p>{s.listIntro}</p>}
+          {s.list && <ul>{s.list.map((li) => <li>{li}</li>)}</ul>}
+          {s.paragraphs?.map((p) => <p>{p}</p>)}
+        </section>
+      ))}
+      <Notes availability={t.availability} review={t.review} />
+    </article>
+
+    <aside class="side" aria-label="Related information">
+      {docs.length > 0 && (
+        <div class="box">
+          <h2 class="side-h">{docs.length > 1 ? 'Consultants' : 'Consultant'}</h2>
+          <ul class="docs">
+            {docs.map((d) => (
+              <li><a href={`/our-doctors/${d.slug}/`}><span class="mono" aria-hidden="true">{d.initials}</span><span><strong>{fullName(d)}</strong><small>{d.role}</small></span></a></li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {t.services && (
+        <div class="box">
+          <h2 class="side-h">In this speciality</h2>
+          <ul class="svc">
+            {t.services.map((s) => (
+              <li>
+                {s.path ? <a href={s.path}>{s.label}</a> : <span>{s.label}</span>}
+                {s.availability === 'to-confirm' && <span class="tag tag--confirm" title="Availability confirmed at consultation">ask the clinic</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {t.image && (!t.feature || t.path === '/laser-treatments/fractional-co2-laser/') && <div class="img"><ClinicImage name={t.image} sizes="(min-width: 1000px) 28vw, 100vw" /></div>}
+      <div class="box ink">
+        <p>Discuss your concern with a specialist.</p>
+        <a class="btn btn--sand" href="/contact-us/#enquiry">Request an appointment <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </aside>
+  </div>
+
+  {t.feature === 'deka' && t.path !== '/laser-treatments/fractional-co2-laser/' && <div class="container"><DekaFeature headingLevel="h2" image={t.image === 'laser-controls' ? 'laser-controls' : 'laser-console'} compact /></div>}
+
+  {children.length > 0 && (
+    <section class="container section--tight" aria-labelledby="sub-h">
+      <h2 id="sub-h" class="sub-h">{t.navLabel}: guides</h2>
+      <ul class="cards" role="list">
+        {children.map((c) => (
+          <li><a class="card card--link" href={c.path}>
+            <span class="tag">{c.kind === 'condition' ? 'Condition guide' : 'Treatment guide'}</span>
+            <h3>{c.h1}</h3><p class="muted small">{c.metaDescription}</p><span class="more">Read <span aria-hidden="true">→</span></span>
+          </a></li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <nav class="container related" aria-label="Related pages">
+    <h2 class="side-h">Related</h2>
+    <ul>{related.map((r) => <li><a class="link-arrow" href={r.href}>{r.label} <span aria-hidden="true">→</span></a></li>)}</ul>
+  </nav>
+
+  <CTABand />
+</Base>
+
+<style>
+  .body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 360px); gap: clamp(32px, 5vw, 88px); align-items: start; }
+  @media (max-width: 1000px) { .body { grid-template-columns: 1fr; } }
+  .main { max-width: 72ch; }
+  .main section + section { margin-top: clamp(36px, 4vw, 52px); }
+  .side { display: grid; gap: 16px; position: sticky; top: 104px; }
+  @media (max-width: 1000px) { .side { position: static; } }
+  .box { background: var(--porcelain); border: 1px solid var(--line); border-radius: var(--r-md); padding: 22px; }
+  .side-h { font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
+  .docs, .svc { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .docs a { display: flex; gap: 12px; align-items: center; padding: 8px; margin: -8px -8px 0; border-radius: 14px; text-decoration: none; }
+  .docs a:hover { background: var(--ivory); }
+  .docs .mono { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--sand-soft); color: var(--champagne-ink); font-weight: 600; font-size: .85rem; letter-spacing: .06em; }
+  .docs strong { display: block; font-size: .98rem; }
+  .docs small { display: block; color: var(--muted); font-size: .82rem; line-height: 1.35; }
+  .svc li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+  .svc li:last-child { border-bottom: 0; }
+  .img { border-radius: var(--r-md); overflow: hidden; }
+  .img :global(img) { width: 100%; height: auto; }
+  .ink { background: var(--ink); color: var(--porcelain); border: 0; display: grid; gap: 14px; }
+  .ink p { margin: 0; font-size: 1.05rem; }
+  .ink .btn { justify-self: start; color: var(--ink); }
+  .solo { margin: 0 0 clamp(24px, 3vw, 40px); display: grid; gap: 10px; max-width: 760px; }
+  .solo :global(img) { width: 100%; border-radius: var(--r-md); }
+  .sub-h { font-size: clamp(1.4rem, 1.2rem + .9vw, 2rem); margin-bottom: 24px; }
+  .cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 16px; }
+  .cards .card { height: 100%; }
+  .cards h3 { margin: 0; }
+  .cards p { margin: 0; }
+  .cards .tag { align-self: flex-start; }
+  .related { padding-block: 8px 0; }
+  .related ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 28px; }
+</style>
