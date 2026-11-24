@@ -3,8 +3,13 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site, isLaunch, integrations } from '../config/site';
+import { withBase } from '../lib/paths';
 
-export interface Crumb { name: string; path: string }
+export interface Crumb {
+  name: string;
+  path: string;
+}
+
 interface Props {
   title: string;
   description: string;
@@ -14,38 +19,73 @@ interface Props {
   jsonLd?: Record<string, unknown>[];
   crumbs?: Crumb[];
 }
-const { title, description, path, noindex = false, ogType = 'website', jsonLd = [], crumbs } = Astro.props;
-const canonical = new URL(path, site.url).href;
-const robots = !isLaunch || noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
-const ogImage = new URL('/og-default.png', site.url).href;
 
+const {
+  title,
+  description,
+  path,
+  noindex = false,
+  ogType = 'website',
+  jsonLd = [],
+  crumbs,
+} = Astro.props;
+
+// Include the GitHub Pages repository base path in generated URLs.
+const canonical = new URL(withBase(path), site.url).href;
+
+const robots = !isLaunch || noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-image-preview:large';
+
+const ogImage = new URL(withBase('/og-default.png'), site.url).href;
+
+// Structured data
 const ld: Record<string, unknown>[] = [...jsonLd];
+
 if (crumbs && crumbs.length) {
   ld.push({
-    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
-    itemListElement: [{ name: 'Home', path: '/' }, ...crumbs].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.path, site.url).href })),
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { name: 'Home', path: '/' },
+      ...crumbs,
+    ].map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: new URL(withBase(c.path), site.url).href,
+    })),
   });
 }
+
 const ga = isLaunch ? integrations.ga4Id : null;
+
 import geist400 from '@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff2?url';
 import geist600 from '@fontsource/geist-sans/files/geist-sans-latin-600-normal.woff2?url';
 ---
+
 <!doctype html>
 <html lang="en-IN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>{title}</title>
   <meta name="description" content={description} />
+
   <link rel="canonical" href={canonical} />
   <meta name="robots" content={robots} />
+
   <link rel="preload" href={geist400} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={geist600} as="font" type="font/woff2" crossorigin />
+
   <meta name="theme-color" content="#F3EFE7" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
-  <link rel="apple-touch-icon" href="/icon-180.png" />
-  <link rel="manifest" href="/site.webmanifest" />
+
+  <link rel="icon" href={withBase('/favicon.ico')} sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href={withBase('/icon-32.png')} />
+  <link rel="apple-touch-icon" href={withBase('/icon-180.png')} />
+  <link rel="manifest" href={withBase('/site.webmanifest')} />
+
   <meta property="og:type" content={ogType} />
   <meta property="og:site_name" content={site.name} />
   <meta property="og:title" content={title} />
@@ -53,39 +93,89 @@ import geist600 from '@fontsource/geist-sans/files/geist-sans-latin-600-normal.w
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={ogImage} />
   <meta property="og:locale" content="en_IN" />
+
   <meta name="twitter:card" content="summary_large_image" />
-  {integrations.gscVerification && <meta name="google-site-verification" content={integrations.gscVerification} />}
-  {ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
-  <script is:inline>document.documentElement.classList.add('js');</script>
+
+  {integrations.gscVerification && (
+    <meta
+      name="google-site-verification"
+      content={integrations.gscVerification}
+    />
+  )}
+
+  {ld.map((obj) => (
+    <script type="application/ld+json" set:html={JSON.stringify(obj)} />
+  ))}
+
+  <script is:inline>
+    document.documentElement.classList.add('js');
+  </script>
+
   {ga && (
     <>
-      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga}`}></script>
+      <script
+        is:inline
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${ga}`}
+      ></script>
+
       <script is:inline define:vars={{ ga }}>
-        window.dataLayer = window.dataLayer || []; function gtag(){ dataLayer.push(arguments); }
-        gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted' });
-        gtag('js', new Date()); gtag('config', ga, { anonymize_ip: true });
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+
+        gtag('consent', 'default', {
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+          analytics_storage: 'granted'
+        });
+
+        gtag('js', new Date());
+        gtag('config', ga, { anonymize_ip: true });
       </script>
     </>
   )}
 </head>
+
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+
   <Header path={path} />
+
   <main id="main" tabindex="-1">
     <slot />
   </main>
+
   <Footer />
+
   <script is:inline>
-    /* Opened by double-clicking an .html file: nothing can load, so say how to start the site instead of looking broken. */
+    /* Opened by double-clicking an .html file: explain how to start the site. */
     if (location.protocol === 'file:') {
-      var d = document.createElement('div'); d.setAttribute('role', 'alert');
-      d.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#F6F3ED;color:#171918;font:17px/1.6 -apple-system,system-ui,sans-serif;display:grid;place-items:center;padding:24px;text-align:center';
-      d.innerHTML = '<div style="max-width:32em"><h1 style="font-size:26px;margin:0 0 12px">This page was opened as a file</h1><p>The website needs its small server to run, otherwise the styles, links and film can’t load.</p><p><strong>On a Mac:</strong> double-click <b>Start website (Mac).command</b> in the project folder. The site then opens at http://localhost:4321.</p></div>';
+      var d = document.createElement('div');
+      d.setAttribute('role', 'alert');
+
+      d.style.cssText =
+        'position:fixed;inset:0;z-index:9999;background:#F6F3ED;color:#171918;font:17px/1.6 -apple-system,system-ui,sans-serif;display:grid;place-items:center;padding:24px;text-align:center';
+
+      d.innerHTML =
+        '<div style="max-width:32em"><h1 style="font-size:26px;margin:0 0 12px">This page was opened as a file</h1><p>The website needs its small server to run, otherwise the styles, links and film cannot load.</p><p><strong>On a Mac:</strong> double-click <b>Start website (Mac).command</b> in the project folder. The site then opens at http://localhost:4321.</p></div>';
+
       document.body.appendChild(d);
     }
+
     /* If the main script ever fails to load, never leave sections invisible. */
-    setTimeout(function () { if (!window.__siteReady) document.querySelectorAll('[data-reveal]').forEach(function (e) { e.classList.add('is-in'); }); }, 2500);
+    setTimeout(function () {
+      if (!window.__siteReady) {
+        document.querySelectorAll('[data-reveal]').forEach(function (e) {
+          e.classList.add('is-in');
+        });
+      }
+    }, 2500);
   </script>
+
   <script>
     import '../scripts/site.ts';
   </script>

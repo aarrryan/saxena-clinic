@@ -1,5 +1,6 @@
 ---
 import ClinicImage from './ClinicImage.astro';
+import { withBase } from '../lib/paths';
 import { DEKA_STATEMENT } from '../data/topics';
 interface Props { headingLevel?: 'h2' | 'h3'; image?: 'laser-console' | 'laser-controls'; compact?: boolean }
 const { headingLevel = 'h2', image = 'laser-console', compact = false } = Astro.props;
@@ -21,8 +22,8 @@ const H = headingLevel;
     </ul>
     <p class="small muted">Led by Dr. Akshay Saxena, consultant dermatologist — clinical and laser dermatology. Suitability is decided at a specialist assessment; results vary between individuals.</p>
     <div class="actions">
-      <a class="btn" href="/laser-treatments/fractional-co2-laser/">About fractional CO2 laser <span class="arrow" aria-hidden="true">→</span></a>
-      <a class="link-arrow" href="/our-doctors/dr-akshay-saxena/">Dr. Akshay Saxena <span aria-hidden="true">→</span></a>
+      <a class="btn" href={withBase("/laser-treatments/fractional-co2-laser/")}>About fractional CO2 laser <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="link-arrow" href={withBase("/our-doctors/dr-akshay-saxena/")}>Dr. Akshay Saxena <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>

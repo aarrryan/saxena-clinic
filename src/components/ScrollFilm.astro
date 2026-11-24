@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../lib/paths';
+
 /**
  * Scroll-driven identity film (homepage). The section pins to the screen and the clinic's film
  * (reference-assets/saxena-motion-film.html, served unchanged from /media/) advances and rewinds
@@ -10,10 +12,16 @@
  * prompt, and it starts paused at 0:00. Without JavaScript the first frame simply stays on screen.
  */
 ---
-<section class="sf" data-scrollfilm aria-label="The clinic’s identity film — scroll to play">
+
+<section class="sf" data-scrollfilm aria-label="The clinic's identity film — scroll to play">
   <div class="sf-pin">
     <div class="sf-frame">
-      <iframe src="/media/identity-film.html?export&t=0" title="Saxena Skin and Cosmetic Clinic identity film" loading="lazy" tabindex="-1"></iframe>
+      <iframe
+        src={`${withBase("/media/identity-film.html")}?export&t=0`}
+        title="Saxena Skin and Cosmetic Clinic identity film"
+        loading="lazy"
+        tabindex="-1"
+      ></iframe>
     </div>
     <div class="sf-ui" aria-hidden="true">
       <span class="sf-cue">Scroll</span>
@@ -21,6 +29,7 @@
     </div>
   </div>
 </section>
+
 <style>
   /* Scroll length: how far the visitor scrolls to play all 18 seconds. */
   .sf { position: relative; height: 1540vh; height: 1540svh; background: #F6F3ED; margin-top: clamp(24px, 4vw, 56px); }

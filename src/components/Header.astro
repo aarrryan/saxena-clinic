@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import logo from '../assets/brand/logo-medallion.png';
 import { specialities, primaryNav } from '../data/nav';
+import { withBase } from '../lib/paths';
 interface Props { path: string }
 const { path } = Astro.props;
 const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
@@ -9,14 +10,14 @@ const specActive = specialities.some((s) => isCurrent(s.href));
 ---
 <header class="site-header" data-header>
   <div class="bar glass">
-    <a class="brand" href="/" aria-label="Saxena Skin and Cosmetic Clinic — home">
+    <a class="brand" href={withBase("/")} aria-label="Saxena Skin and Cosmetic Clinic — home">
       <Image src={logo} alt="" width={40} height={40} class="brand-mark" loading="eager" />
       <span class="brand-text"><strong>Saxena</strong><span>Skin and Cosmetic Clinic</span></span>
     </a>
 
     <nav class="primary" aria-label="Primary">
       <ul>
-        <li><a href="/our-doctors/" aria-current={isCurrent('/our-doctors/') ? 'page' : undefined}>Our Doctors</a></li>
+        <li><a href={withBase("/our-doctors/")} aria-current={isCurrent('/our-doctors/') ? 'page' : undefined}>Our Doctors</a></li>
         <li class="has-panel">
           <button type="button" class="panel-toggle" aria-expanded="false" aria-controls="spec-panel" data-panel-toggle aria-current={specActive ? 'true' : undefined}>
             Specialities <svg aria-hidden="true" viewBox="0 0 12 12" width="10" height="10"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
@@ -24,18 +25,18 @@ const specActive = specialities.some((s) => isCurrent(s.href));
           <div class="panel glass" id="spec-panel" data-panel>
             <ul class="panel-grid">
               {specialities.map((s) => (
-                <li><a href={s.href} aria-current={isCurrent(s.href) ? 'page' : undefined}><span>{s.label}</span><small>{s.blurb}</small></a></li>
+                <li><a href={withBase(s.href)} aria-current={isCurrent(s.href) ? 'page' : undefined}><span>{s.label}</span><small>{s.blurb}</small></a></li>
               ))}
             </ul>
           </div>
         </li>
-        <li><a href="/conditions-we-treat/" aria-current={isCurrent('/conditions-we-treat/') ? 'page' : undefined}>Conditions</a></li>
-        <li><a href="/patient-education/" aria-current={isCurrent('/patient-education/') ? 'page' : undefined}>Patient Education</a></li>
-        <li><a href="/about-us/" aria-current={isCurrent('/about-us/') ? 'page' : undefined}>About</a></li>
+        <li><a href={withBase("/conditions-we-treat/")} aria-current={isCurrent('/conditions-we-treat/') ? 'page' : undefined}>Conditions</a></li>
+        <li><a href={withBase("/patient-education/")} aria-current={isCurrent('/patient-education/') ? 'page' : undefined}>Patient Education</a></li>
+        <li><a href={withBase("/about-us/")} aria-current={isCurrent('/about-us/') ? 'page' : undefined}>About</a></li>
       </ul>
     </nav>
 
-    <a class="btn btn--sand cta" href="/contact-us/#enquiry">Request an appointment</a>
+    <a class="btn btn--sand cta" href={withBase("/contact-us/#enquiry")}>Request an appointment</a>
 
     <a class="menu-btn" href="#site-footer-nav" aria-controls="mobile-menu" aria-expanded="false" data-menu-toggle>
       <span class="menu-label">Menu</span><span class="burger" aria-hidden="true"><i></i><i></i></span>
@@ -45,11 +46,11 @@ const specActive = specialities.some((s) => isCurrent(s.href));
   <div class="mobile-menu" id="mobile-menu" data-menu hidden>
     <nav aria-label="Mobile">
       <ul>
-        {primaryNav.map((n) => <li><a href={n.href} aria-current={isCurrent(n.href) && (n.href !== '/' || path === '/') ? 'page' : undefined}>{n.label}</a></li>)}
-        <li><a href="/cosmetic-gynaecology/">Cosmetic Gynaecology</a></li>
-        <li><a href="/cranio-maxillofacial-surgery/">Maxillofacial Surgery</a></li>
+        {primaryNav.map((n) => <li><a href={withBase(n.href)} aria-current={isCurrent(n.href) && (n.href !== '/' || path === '/') ? 'page' : undefined}>{n.label}</a></li>)}
+        <li><a href={withBase("/cosmetic-gynaecology/")}>Cosmetic Gynaecology</a></li>
+        <li><a href={withBase("/cranio-maxillofacial-surgery/")}>Maxillofacial Surgery</a></li>
       </ul>
-      <a class="btn" href="/contact-us/#enquiry">Request an appointment <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn" href={withBase("/contact-us/#enquiry")}>Request an appointment <span class="arrow" aria-hidden="true">→</span></a>
     </nav>
   </div>
 </header>

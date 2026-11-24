@@ -1,27 +1,67 @@
----
+﻿---
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import ContactPanel from '../components/ContactPanel.astro';
 import EnquiryForm from '../components/EnquiryForm.astro';
 import { clinicSchema } from '../lib/schema';
+
 const crumbs = [{ name: 'Contact & Appointments', path: '/contact-us/' }];
 ---
-<Base title="Contact & Appointments | Saxena Skin and Cosmetic Clinic, Jabalpur" description="Request an appointment at Saxena Skin and Cosmetic Clinic, Napier Town, Jabalpur. Send an enquiry for dermatology, hair, laser, gynaecology or facial aesthetics." path="/contact-us/" crumbs={crumbs} jsonLd={[clinicSchema()]}>
-  <PageHeader eyebrow="Contact & appointments" title="Request an appointment" lede="Send an enquiry below and the clinic will contact you to arrange a consultation with the right specialist." crumbs={crumbs} seed={8} />
+
+<Base
+  title="Contact & Appointments | Saxena Skin and Cosmetic Clinic, Jabalpur"
+  description="Request an appointment at Saxena Skin and Cosmetic Clinic, Napier Town, Jabalpur. Send an enquiry for dermatology, hair, laser, gynaecology or facial aesthetics."
+  path="/contact-us/"
+  crumbs={crumbs}
+  jsonLd={[clinicSchema()]}
+>
+  <PageHeader
+    eyebrow="Contact & appointments"
+    title="Request an appointment"
+    lede="Send an enquiry below and the clinic will contact you to arrange a consultation with the right specialist."
+    crumbs={crumbs}
+    seed={8}
+  />
+
   <section class="container section--tight" id="enquiry" aria-labelledby="enq-h">
     <div class="enq surface">
       <div class="aside">
         <h2 id="enq-h">Appointment enquiry</h2>
-        <p class="muted">Tell us which speciality you need and when suits you. If you are not sure which doctor to see, choose “Not sure — please advise”.</p>
-        <p class="muted small">For a medical emergency, do not use this form — go to your nearest emergency department.</p>
+        <p class="muted">
+          Tell us which speciality you need and when suits you. If you are not
+          sure which doctor to see, choose &ldquo;Not sure &mdash; please advise&rdquo;.
+        </p>
+        <p class="muted small">
+          For a medical emergency, do not use this form &mdash; go to your nearest
+          emergency department.
+        </p>
       </div>
+
       <EnquiryForm />
     </div>
   </section>
-  <section class="container section--tight" aria-label="Clinic location"><ContactPanel /></section>
+
+  <section class="container section--tight" aria-label="Clinic location">
+    <ContactPanel />
+  </section>
 </Base>
+
 <style>
-  .enq { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 64px); padding: clamp(24px, 4vw, 56px); }
-  @media (max-width: 900px) { .enq { grid-template-columns: 1fr; } }
-  .aside h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem); margin-bottom: 14px; }
+  .enq {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: clamp(24px, 4vw, 64px);
+    padding: clamp(24px, 4vw, 56px);
+  }
+
+  @media (max-width: 900px) {
+    .enq {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .aside h2 {
+    font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem);
+    margin-bottom: 14px;
+  }
 </style>

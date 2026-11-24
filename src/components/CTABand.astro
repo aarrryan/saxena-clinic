@@ -1,5 +1,6 @@
 ---
 import TopoArt from './TopoArt.astro';
+import { withBase } from '../lib/paths';
 interface Props { title?: string; text?: string }
 const { title = 'Speak to a specialist', text = 'Send an appointment enquiry and the clinic will contact you to arrange a consultation with the right consultant.' } = Astro.props;
 ---
@@ -10,7 +11,7 @@ const { title = 'Speak to a specialist', text = 'Send an appointment enquiry and
       <h2 id="cta-h">{title}</h2>
       <p>{text}</p>
     </div>
-    <a class="btn btn--sand" href="/contact-us/#enquiry">Request an appointment <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="btn btn--sand" href={withBase("/contact-us/#enquiry")}>Request an appointment <span class="arrow" aria-hidden="true">→</span></a>
   </div>
 </section>
 <style>
