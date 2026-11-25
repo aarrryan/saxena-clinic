@@ -8,6 +8,7 @@ import { doctors, fullName, type Doctor } from '../../data/doctors';
 import { topicByPath } from '../../data/topics';
 import { site, canShow } from '../../config/site';
 import { physicianSchema } from '../../lib/schema';
+import { withBase } from '../../lib/paths';
 
 export function getStaticPaths() {
   return doctors.map((d) => ({ params: { slug: d.slug }, props: { d } }));
@@ -58,7 +59,7 @@ const ld = d.profileStatus === 'confirmed' ? [physicianSchema(d, path)] : [];
     <aside class="side" aria-label="Related treatments">
       <div class="box">
         <h2 class="side-h">Related pages</h2>
-        <ul>{related.map((r) => <li><a class="link-arrow" href={r.href}>{r.label} <span aria-hidden="true">→</span></a></li>)}</ul>
+        <ul>{related.map((r) => <li><a class="link-arrow" href={withBase(r.href)}>{r.label} <span aria-hidden="true">→</span></a></li>)}</ul>
       </div>
     </aside>
   </div>
@@ -75,7 +76,7 @@ const ld = d.profileStatus === 'confirmed' ? [physicianSchema(d, path)] : [];
 
   <nav class="container others" aria-label="Other consultants">
     <h2 class="side-h">Other consultants</h2>
-    <ul>{others.map((o) => <li><a class="link-arrow" href={`/our-doctors/${o.slug}/`}>{fullName(o)} <span aria-hidden="true">→</span></a></li>)}</ul>
+    <ul>{others.map((o) => <li><a class="link-arrow" href={withBase(`/our-doctors/${o.slug}/`)}>{fullName(o)} <span aria-hidden="true">→</span></a></li>)}</ul>
   </nav>
   <CTABand />
 </Base>

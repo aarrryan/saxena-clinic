@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import CTABand from '../components/CTABand.astro';
 import { conditionGroups } from '../data/topics';
+import { withBase } from '../lib/paths';
 const crumbs = [{ name: 'Conditions We Treat', path: '/conditions-we-treat/' }];
 ---
 <Base title="Conditions We Treat — Skin, Hair, Scars & More | Saxena Clinic, Jabalpur" description="Skin, hair and scalp, scar, women’s health and facial conditions assessed by the specialist consultants at Saxena Skin and Cosmetic Clinic, Jabalpur." path="/conditions-we-treat/" crumbs={crumbs}>
@@ -15,7 +16,7 @@ const crumbs = [{ name: 'Conditions We Treat', path: '/conditions-we-treat/' }];
           <p class="muted small">{g.intro}</p>
         </div>
         <ul>
-          {g.items.map((it) => <li>{it.path ? <a href={it.path}>{it.label}<span aria-hidden="true"> →</span></a> : <span>{it.label}</span>}</li>)}
+          {g.items.map((it) => <li>{it.path ? <a href={withBase(it.path)}>{it.label}<span aria-hidden="true"> →</span></a> : <span>{it.label}</span>}</li>)}
         </ul>
       </section>
     ))}

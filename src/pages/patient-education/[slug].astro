@@ -6,6 +6,7 @@ import { articles, isPublishable, type Article } from '../../data/articles';
 import { topicByPath } from '../../data/topics';
 import { site } from '../../config/site';
 import { orgRef } from '../../lib/schema';
+import { withBase } from '../../lib/paths';
 
 /** Launch builds only generate articles that are fully approved (author, reviewer, dates, references). */
 export function getStaticPaths() {
@@ -42,7 +43,7 @@ const related = a.related.map((p) => ({ href: p, label: topicByPath(p)?.navLabel
       {a.references.length > 0 && (<><h2>References</h2><ol class="refs">{a.references.map((r) => <li><a href={r.url} rel="noopener" target="_blank">{r.title}</a></li>)}</ol></>)}
       <p class="small muted disc">This article is general information and does not replace a consultation with a qualified doctor.</p>
     </div>
-    <nav class="rel" aria-label="Related guides"><ul>{related.map((r) => <li><a class="link-arrow" href={r.href}>{r.label} <span aria-hidden="true">→</span></a></li>)}</ul></nav>
+    <nav class="rel" aria-label="Related guides"><ul>{related.map((r) => <li><a class="link-arrow" href={withBase(r.href)}>{r.label} <span aria-hidden="true">→</span></a></li>)}</ul></nav>
   </article>
   <CTABand />
 </Base>

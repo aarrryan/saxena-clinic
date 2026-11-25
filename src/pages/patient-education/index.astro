@@ -5,6 +5,7 @@ import CTABand from '../../components/CTABand.astro';
 import { articles, plannedTopics, isPublishable } from '../../data/articles';
 import { topics } from '../../data/topics';
 import { isLaunch } from '../../config/site';
+import { withBase } from '../../lib/paths';
 const crumbs = [{ name: 'Patient Education', path: '/patient-education/' }];
 const visible = articles.filter((a) => (isLaunch ? isPublishable(a) : true));
 const guides = topics.filter((t) => t.kind !== 'speciality');
@@ -17,7 +18,7 @@ const guides = topics.filter((t) => t.kind !== 'speciality');
       <h2 id="art-h" class="h">Articles</h2>
       <ul class="cards" role="list">
         {visible.map((a) => (
-          <li><a class="card card--link" href={`/patient-education/${a.slug}/`}>
+          <li><a class="card card--link" href={withBase(`/patient-education/${a.slug}/`)}>
             <span class="tag">{a.category}{a.status === 'draft' && ' · draft — awaiting clinical review'}</span>
             <h3>{a.title}</h3><p class="muted small">{a.summary}</p><span class="more">Read <span aria-hidden="true">→</span></span>
           </a></li>
@@ -30,7 +31,7 @@ const guides = topics.filter((t) => t.kind !== 'speciality');
     <h2 id="g-h" class="h">Condition and treatment guides</h2>
     <ul class="cards" role="list">
       {guides.map((g) => (
-        <li><a class="card card--link" href={g.path}>
+        <li><a class="card card--link" href={withBase(g.path)}>
           <span class="tag">{g.kind === 'condition' ? 'Condition guide' : 'Treatment guide'}</span>
           <h3>{g.h1}</h3><p class="muted small">{g.metaDescription}</p><span class="more">Read <span aria-hidden="true">→</span></span>
         </a></li>
