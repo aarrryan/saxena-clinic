@@ -6,7 +6,7 @@ import DekaFeature from '../components/DekaFeature.astro';
 import ClinicImage from '../components/ClinicImage.astro';
 import ContactPanel from '../components/ContactPanel.astro';
 import CTABand from '../components/CTABand.astro';
-import ScrollFilm from '../components/ScrollFilm.astro';
+import ClinicWalkthrough from '../components/ClinicWalkthrough.astro';
 import { doctors } from '../data/doctors';
 import { specialities } from '../data/nav';
 import { articles, plannedTopics, isPublishable } from '../data/articles';
@@ -65,8 +65,8 @@ const guides = [
     </ul>
   </section>
 
-  <!-- 3b · IDENTITY FILM — pinned full screen, advances with the visitor's scroll -->
-  <ScrollFilm />
+  <!-- 3b · INSIDE THE CLINIC — four-video, scroll-controlled centrepiece (identity film now lives on About) -->
+  <ClinicWalkthrough />
 
   <!-- 4 · INTRODUCTION -->
   <section class="section container intro" aria-labelledby="intro-h">
@@ -191,12 +191,12 @@ const guides = [
   <section class="section container" aria-labelledby="gal-h">
     <div class="sec-head">
       <h2 id="gal-h">Inside the clinic</h2>
-      <p class="muted small gal-note">Stills from the clinic’s own footage. Professional photography to follow.</p>
+      <p class="muted small gal-note">Photographed at the clinic.</p>
     </div>
     <ul class="gallery" role="list">
-      <li data-reveal><figure><ClinicImage name="laser-console" sizes="(min-width: 900px) 30vw, 100vw" /><figcaption>DEKA fractional CO2 laser system</figcaption></figure></li>
-      <li data-reveal><figure><ClinicImage name="laser-controls" sizes="(min-width: 900px) 30vw, 100vw" /><figcaption>Laser safety controls</figcaption></figure></li>
-      <li data-reveal><figure><ClinicImage name="treatment-preparation" sizes="(min-width: 900px) 30vw, 100vw" /><figcaption>Treatment preparation</figcaption></figure></li>
+      <li data-reveal><figure><ClinicImage name="treatment-room" sizes="(min-width: 900px) 30vw, 100vw" /><figcaption>Treatment room</figcaption></figure></li>
+      <li data-reveal><figure><ClinicImage name="procedure-room-2" sizes="(min-width: 900px) 30vw, 100vw" /><figcaption>Procedure room</figcaption></figure></li>
+      <li data-reveal><figure><ClinicImage name="laser-corner" sizes="(min-width: 900px) 30vw, 100vw" /><figcaption>Laser and energy-based devices</figcaption></figure></li>
     </ul>
   </section>
 
@@ -292,7 +292,7 @@ const guides = [
   .gallery { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   @media (max-width: 760px) { .gallery { grid-template-columns: 1fr; } }
   .gallery figure { margin: 0; display: grid; gap: 10px; }
-  .gallery :global(img) { width: 100%; aspect-ratio: 4 / 3.4; object-fit: cover; border-radius: var(--r-md); }
+  .gallery :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r-md); }
   .gallery figcaption { font-size: .9rem; color: var(--muted); }
   .guides { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   @media (max-width: 900px) { .guides { grid-template-columns: 1fr; } }

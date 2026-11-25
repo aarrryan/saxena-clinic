@@ -5,7 +5,7 @@ interface Props { preselectDoctor?: string }
 const { preselectDoctor } = Astro.props;
 const today = new Date().toISOString().slice(0, 10);
 ---
-<form class="enquiry" method="post" action={withBase("/api/enquiry/")} data-enquiry novalidate aria-describedby="enq-intro">
+<form class="enquiry" method="post" action="/api/enquiry/" data-enquiry novalidate aria-describedby="enq-intro">
   <div class="summary" data-summary role="alert" tabindex="-1" aria-labelledby="enq-sum-h" hidden><h2 id="enq-sum-h">There is a problem</h2><ul></ul></div>
   <p id="enq-intro" class="intro">This is an <strong>appointment enquiry</strong>, not a confirmed booking. The clinic will contact you to arrange a time. Fields marked <span aria-hidden="true">*</span><span class="sr-only">with an asterisk</span> are required.</p>
 

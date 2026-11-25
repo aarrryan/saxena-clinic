@@ -110,6 +110,92 @@ if (sf) {
   } else { running = true; requestAnimationFrame(tick); }
 }
 
+/* ---------- homepage "Inside the clinic": four-video, scroll-controlled composition ----------
+   Panels move in one after another as the visitor scrolls (progress → CSS --k per panel, eased so it glides);
+   titles follow each panel, the clinic mark appears last. Videos load only near the viewport, loop muted
+   while visible, pause off-screen, and can be paused by the visitor. Reduced motion / short screens keep the
+   static composition with posters. */
+const walk = document.querySelector<HTMLElement>('[data-walk]');
+if (walk) {
+  const panels = [...walk.querySelectorAll<HTMLElement>('[data-panel]')];
+  const core = walk.querySelector<HTMLElement>('[data-core]')!;
+  const intro = walk.querySelector<HTMLElement>('.walk-intro');
+  const bar = walk.querySelector<HTMLElement>('[data-walk-bar]');
+  const toggle = walk.querySelector<HTMLButtonElement>('[data-walk-toggle]')!;
+  const videos = [...walk.querySelectorAll<HTMLVideoElement>('video[data-src]')];
+  const tallEnough = () => innerHeight >= 560 && innerWidth >= 340;
+  const live = !reduce && tallEnough();
+  let userPaused = false, inView = false, loaded = false;
+
+  const loadVideos = () => {
+    if (loaded || reduce) return; loaded = true;
+    videos.forEach((v) => { v.src = v.dataset.src!; v.load(); });
+    toggle.hidden = false;
+  };
+  const sync = () => {
+    videos.forEach((v) => {
+      if (inView && !userPaused && loaded) { const p = v.play(); if (p) p.catch(() => {}); } else v.pause();
+    });
+    toggle.textContent = userPaused ? 'Play videos' : 'Pause videos';
+    toggle.setAttribute('aria-pressed', String(userPaused));
+  };
+  toggle.addEventListener('click', () => { userPaused = !userPaused; sync(); });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([en]) => { if (en.isIntersecting) loadVideos(); }, { rootMargin: '60% 0px' }).observe(walk);
+    new IntersectionObserver(([en]) => { inView = en.isIntersecting; sync(); }, { threshold: 0.05 }).observe(walk);
+  } else { loadVideos(); inView = true; sync(); }
+
+  if (live) {
+    walk.classList.add('walk--live');
+    const START = [0.04, 0.2, 0.36, 0.52], LEN = 0.2, CORE = [0.72, 0.9];
+    const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+    const ease = (x: number) => 1 - Math.pow(1 - x, 3);                     // ease-out cubic: arrives softly
+    let cur = 0, running = false, last = -1;
+    const progress = () => {
+      const r = walk.getBoundingClientRect(); const span = r.height - innerHeight;
+      return span > 0 ? clamp01(-r.top / span) : 1;
+    };
+    const paint = (p: number) => {
+      panels.forEach((el, i) => el.style.setProperty('--k', ease(clamp01((p - START[i]) / LEN)).toFixed(4)));
+      core.style.setProperty('--c', ease(clamp01((p - CORE[0]) / (CORE[1] - CORE[0]))).toFixed(4));
+      if (bar) bar.style.transform = `scaleX(${p.toFixed(4)})`;
+    };
+    const tick = () => {
+      const target = progress();
+      cur += (target - cur) * 0.14;
+      if (Math.abs(target - cur) < 0.0005) cur = target;
+      if (cur !== last) { paint(cur); last = cur; }
+      if (running) requestAnimationFrame(tick);
+    };
+    new IntersectionObserver(([en]) => { const was = running; running = en.isIntersecting; if (running && !was) requestAnimationFrame(tick); }, { rootMargin: '20% 0px' }).observe(walk);
+    paint(progress()); cur = last = progress();
+    // a resize that makes the screen too short for the pinned version falls back to the static composition
+    addEventListener('resize', () => { if (!tallEnough() && walk.classList.contains('walk--live')) { walk.classList.remove('walk--live'); running = false; panels.forEach((el) => el.style.removeProperty('--k')); core.style.removeProperty('--c'); } }, { passive: true });
+  }
+}
+
+/* ---------- facilities gallery lightbox (About) — native <dialog>; links still work without JS ---------- */
+document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((gal) => {
+  const box = gal.querySelector<HTMLDialogElement>('[data-lightbox]');
+  if (!box || typeof box.showModal !== 'function') return;            // very old browsers: keep plain links
+  const items = [...gal.querySelectorAll<HTMLAnchorElement>('[data-full]')];
+  const img = box.querySelector<HTMLImageElement>('[data-lb-img]')!;
+  const cap = box.querySelector<HTMLElement>('[data-lb-cap]')!;
+  let at = 0, opener: HTMLElement | null = null;
+  const show = (i: number) => {
+    at = (i + items.length) % items.length; const a = items[at];
+    img.src = a.dataset.full!; img.alt = a.querySelector('img')?.alt ?? ''; cap.textContent = `${a.dataset.caption} · ${at + 1} of ${items.length}`;
+  };
+  items.forEach((a, i) => a.addEventListener('click', (e) => { e.preventDefault(); opener = a; show(i); box.showModal(); }));
+  box.querySelector('[data-lb-close]')!.addEventListener('click', () => box.close());
+  box.querySelector('[data-lb-prev]')!.addEventListener('click', () => show(at - 1));
+  box.querySelector('[data-lb-next]')!.addEventListener('click', () => show(at + 1));
+  box.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(at - 1); else if (e.key === 'ArrowRight') show(at + 1); });
+  box.addEventListener('click', (e) => { if (e.target === box) box.close(); });  // click on the backdrop
+  box.addEventListener('close', () => { img.removeAttribute('src'); opener?.focus(); });
+});
+
 /* ---------- appointment enquiry form ---------- */
 import { validateEnquiry, type EnquiryInput } from '../lib/enquiry';
 const form = document.querySelector<HTMLFormElement>('[data-enquiry]');

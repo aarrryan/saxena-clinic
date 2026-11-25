@@ -1,0 +1,73 @@
+---
+/**
+ * Compact facilities gallery with a lightbox (About page).
+ * Thumbnails are responsive AVIF/WebP via ClinicImage; the enlarged view loads a single 1400px WebP only when
+ * opened. The lightbox is a native <dialog> (focus trap, Esc to close) driven by src/scripts/site.ts; without
+ * JavaScript each thumbnail is a plain link to its full-size image, so nothing is lost.
+ */
+import { getImage } from 'astro:assets';
+import ClinicImage, { type ClinicImageKey } from './ClinicImage.astro';
+import treatmentRoom2 from '../assets/clinic/treatment-room-2.jpg';
+import procedureRoom from '../assets/clinic/procedure-room.jpg';
+import dekaUnit from '../assets/clinic/deka-co2-unit.jpg';
+import laserDevice from '../assets/clinic/laser-device.jpg';
+import treatmentRoom3 from '../assets/clinic/treatment-room-3.jpg';
+import deviceTower from '../assets/clinic/device-tower.jpg';
+
+const items: { key: ClinicImageKey; src: ImageMetadata; caption: string }[] = [
+  { key: 'treatment-room-2', src: treatmentRoom2, caption: 'Treatment room' },
+  { key: 'procedure-room', src: procedureRoom, caption: 'Procedure room' },
+  { key: 'deka-co2-unit', src: dekaUnit, caption: 'DEKA fractional CO2 laser' },
+  { key: 'laser-device', src: laserDevice, caption: 'Laser device' },
+  { key: 'treatment-room-3', src: treatmentRoom3, caption: 'Treatment room' },
+  { key: 'device-tower', src: deviceTower, caption: 'Laser system' },
+];
+const gallery = await Promise.all(items.map(async (it) => ({
+  ...it, full: (await getImage({ src: it.src, format: 'webp', width: 1400, quality: 80 })).src,
+})));
+---
+<div class="cg" data-gallery>
+  <ul class="cg-grid" role="list">
+    {gallery.map((g, i) => (
+      <li>
+        <a class="cg-item" href={g.full} data-full={g.full} data-index={i} data-caption={g.caption} aria-label={`Open larger photo: ${g.caption}`}>
+          <ClinicImage name={g.key} sizes="(min-width: 900px) 24vw, 50vw" />
+        </a>
+        <p class="cg-cap">{g.caption}</p>
+      </li>
+    ))}
+  </ul>
+  <dialog class="cg-box" data-lightbox aria-label="Clinic photo">
+    <figure>
+      <img alt="" data-lb-img decoding="async" />
+      <figcaption data-lb-cap></figcaption>
+    </figure>
+    <button type="button" class="cg-btn cg-close" data-lb-close aria-label="Close photo">×</button>
+    <button type="button" class="cg-btn cg-prev" data-lb-prev aria-label="Previous photo">‹</button>
+    <button type="button" class="cg-btn cg-next" data-lb-next aria-label="Next photo">›</button>
+  </dialog>
+</div>
+<style>
+  .cg-grid { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  @media (max-width: 760px) { .cg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+  .cg-item { display: block; border-radius: var(--r-sm); overflow: hidden; background: var(--sand-soft); cursor: zoom-in; }
+  .cg-item :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; transition: transform .6s var(--ease), filter .4s var(--ease); }
+  .cg-item:hover :global(img) { transform: scale(1.03); }
+  .cg-item:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  .cg-cap { margin: 8px 0 0; font-size: .88rem; color: var(--muted); }
+
+  .cg-box { width: min(92vw, 980px); max-height: 92vh; padding: 0; border: 0; border-radius: var(--r-md); background: #141413; color: #F6F3ED; overflow: hidden; }
+  .cg-box::backdrop { background: rgba(14, 14, 13, .82); }
+  .cg-box[open] { animation: cg-in .28s var(--ease); }
+  @keyframes cg-in { from { opacity: 0; transform: scale(.98); } }
+  @media (prefers-reduced-motion: reduce) { .cg-box[open] { animation: none; } .cg-item :global(img) { transition: none; } }
+  .cg-box figure { margin: 0; display: grid; justify-items: center; }
+  .cg-box img { max-width: 100%; max-height: calc(92vh - 52px); object-fit: contain; display: block; }
+  .cg-box figcaption { padding: 14px 20px 16px; font-size: .92rem; color: rgba(246,243,237,.85); }
+  .cg-btn { position: absolute; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(20,20,19,.62); color: #F6F3ED; font: 400 1.6rem/1 var(--font); cursor: pointer; display: grid; place-items: center; }
+  .cg-btn:hover { background: rgba(20,20,19,.85); }
+  .cg-btn:focus-visible { outline: 2px solid #E3D3B4; outline-offset: 2px; }
+  .cg-close { top: 12px; right: 12px; }
+  .cg-prev, .cg-next { top: calc(50% - 48px); }
+  .cg-prev { left: 12px; } .cg-next { right: 12px; }
+</style>

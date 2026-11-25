@@ -2,8 +2,8 @@
 import ClinicImage from './ClinicImage.astro';
 import { withBase } from '../lib/paths';
 import { DEKA_STATEMENT } from '../data/topics';
-interface Props { headingLevel?: 'h2' | 'h3'; image?: 'laser-console' | 'laser-controls'; compact?: boolean }
-const { headingLevel = 'h2', image = 'laser-console', compact = false } = Astro.props;
+interface Props { headingLevel?: 'h2' | 'h3'; image?: 'laser-console' | 'laser-controls' | 'deka-co2-unit'; compact?: boolean }
+const { headingLevel = 'h2', image = 'deka-co2-unit', compact = false } = Astro.props;
 const H = headingLevel;
 ---
 <section class:list={['deka', { compact }]} aria-labelledby="deka-h" data-reveal>

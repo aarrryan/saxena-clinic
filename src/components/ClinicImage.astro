@@ -1,14 +1,33 @@
 ---
-/** Real clinic stills, cropped from the clinic's own footage with no patient and no burned-in captions. */
+/** Real clinic images: stills from the clinic's own footage, and photographs of the premises taken in July 2026
+ *  (no patients, no people; all metadata, including location, removed on export). */
 import { Picture } from 'astro:assets';
 import laserConsole from '../assets/clinic/laser-console.png';
 import laserControls from '../assets/clinic/laser-controls.png';
 import treatmentPreparation from '../assets/clinic/treatment-preparation.png';
+import treatmentRoom from '../assets/clinic/treatment-room.jpg';
+import treatmentRoom2 from '../assets/clinic/treatment-room-2.jpg';
+import treatmentRoom3 from '../assets/clinic/treatment-room-3.jpg';
+import procedureRoom from '../assets/clinic/procedure-room.jpg';
+import procedureRoom2 from '../assets/clinic/procedure-room-2.jpg';
+import laserCorner from '../assets/clinic/laser-corner.jpg';
+import dekaUnit from '../assets/clinic/deka-co2-unit.jpg';
+import laserDevice from '../assets/clinic/laser-device.jpg';
+import deviceTower from '../assets/clinic/device-tower.jpg';
 
 const images = {
   'laser-console': { src: laserConsole, alt: 'The clinic’s DEKA fractional CO2 laser system, showing its touchscreen console and control panel.' },
   'laser-controls': { src: laserControls, alt: 'A gloved hand at the key switch of the clinic’s laser system, beside the red emergency stop button.' },
   'treatment-preparation': { src: treatmentPreparation, alt: 'Clinic staff in gloves preparing a skin treatment, pouring a measured amount into a small glass bowl.' },
+  'treatment-room': { src: treatmentRoom, alt: 'Treatment room with a tan adjustable procedure chair, a ceiling-mounted surgical light and wood-panelled walls.' },
+  'treatment-room-2': { src: treatmentRoom2, alt: 'Treatment room seen from the doorway: procedure chair, surgical light, mirror niche and two treatment devices.' },
+  'treatment-room-3': { src: treatmentRoom3, alt: 'Treatment room with a procedure chair beneath a square ceiling light, beside two treatment devices.' },
+  'procedure-room': { src: procedureRoom, alt: 'Procedure room with a reclining black procedure chair, wooden blinds and a laser unit by the wall.' },
+  'procedure-room-2': { src: procedureRoom2, alt: 'Procedure room with a black procedure chair, a wall-mounted examination light and storage cabinets.' },
+  'laser-corner': { src: laserCorner, alt: 'A laser device with its handpiece cable coiled on a stand, in a corner of a treatment room.' },
+  'deka-co2-unit': { src: dekaUnit, alt: 'The clinic’s DEKA SmartXide fractional CO2 laser unit, with its touchscreen, key switch and emergency stop.' },
+  'laser-device': { src: laserDevice, alt: 'A laser device with an articulated arm, standing beside a privacy curtain.' },
+  'device-tower': { src: deviceTower, alt: 'A tall white laser system on wheels, beside wood-panelled cabinetry.' },
 } as const;
 export type ClinicImageKey = keyof typeof images;
 interface Props { name: ClinicImageKey; class?: string; sizes?: string; eager?: boolean }

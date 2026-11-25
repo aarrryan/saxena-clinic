@@ -4,6 +4,7 @@ import PageHeader from '../components/PageHeader.astro';
 import DoctorCard from '../components/DoctorCard.astro';
 import DekaFeature from '../components/DekaFeature.astro';
 import FilmPlayer from '../components/FilmPlayer.astro';
+import ClinicGallery from '../components/ClinicGallery.astro';
 import ContactPanel from '../components/ContactPanel.astro';
 import CTABand from '../components/CTABand.astro';
 import { doctors } from '../data/doctors';
@@ -56,9 +57,10 @@ const showYears = canShow(site.rajeevExperienceYears);
       <div class="prose">
         <h2 id="fac-h" class="vh2">Clinic facilities</h2>
         <p>The clinic houses consultation rooms and treatment facilities for dermatology, laser and procedural care, including a fractional CO2 laser system using Italian DEKA technology.</p>
-        <p class="small muted">Further details of the clinic’s history, infrastructure and accessibility will be added once confirmed by the clinic, together with professional photography of the premises.</p>
+        <p class="small muted">Further details of the clinic’s history, infrastructure and accessibility will be added once confirmed by the clinic.</p>
       </div>
     </div>
+    <ClinicGallery />
   </section>
 
   <section class="container section--tight" aria-label="Location"><ContactPanel /></section>
