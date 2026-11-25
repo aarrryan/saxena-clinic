@@ -119,21 +119,23 @@ async def interactions(b):
     await pg.goto(BASE + '/'); await pg.keyboard.press('Tab')
     if (await pg.evaluate('document.activeElement.className')) != 'skip-link': fail('first Tab stop is not the skip link')
     else: ok('skip link is first focus stop')
-    # homepage film scrubs with scroll: top of section = 0 s, halfway = ~8 s, end = logo card at 16 s, and back again
+    # homepage centrepiece: four panels arrive one by one with scroll, titles follow, the clinic mark comes last
     await pg.goto(BASE + '/'); await pg.wait_for_timeout(300)
-    geo = await pg.evaluate("(() => { const s = document.querySelector('[data-scrollfilm]'); const r = s.getBoundingClientRect(); return { top: r.top + scrollY, span: r.height - innerHeight }; })()")
-    async def film_t():
-        tc = await pg.frame_locator('[data-scrollfilm] iframe').locator('#tc').text_content(timeout=5000)
-        return float(tc.split('/')[0].strip().split(':')[1])
+    geo = await pg.evaluate("(() => { const s = document.querySelector('[data-walk]'); const r = s.getBoundingClientRect(); return { top: r.top + scrollY, span: r.height - innerHeight, live: s.classList.contains('walk--live') }; })()")
+    async def walk_state():
+        return await pg.evaluate("(() => ({ k: [...document.querySelectorAll('[data-walk] .wp')].map(e => +(+getComputedStyle(e).getPropertyValue('--k')).toFixed(2)), c: +(+getComputedStyle(document.querySelector('[data-core]')).getPropertyValue('--c')).toFixed(2) }))()")
     try:
+        if not geo['live']: fail('centrepiece not in its scroll-controlled mode')
         got = []
-        for frac in (0.0, 0.5, 1.0, 0.25):
-            await pg.evaluate(f"window.scrollTo(0, {geo['top'] + geo['span'] * frac})"); await pg.wait_for_timeout(1400)
-            got.append(await film_t())
-        exp = [0, 8, 16, 4]
-        good = all(abs(g - e) < 0.6 for g, e in zip(got, exp))
-        ok(f'homepage film follows scroll {got}') if good else fail(f'homepage film scroll mapping {got} (expected ≈{exp})')
-    except Exception as e: fail(f'homepage scroll film: {e}')
+        for frac in (0.0, 0.3, 1.0):
+            await pg.evaluate(f"window.scrollTo(0, {geo['top'] + geo['span'] * frac})"); await pg.wait_for_timeout(1600)
+            got.append(await walk_state())
+        s0, s1, s2 = got
+        seq = s0['k'] == [0, 0, 0, 0] and s1['k'][0] > 0.9 and s1['k'][3] < 0.1 and s2['k'] == [1, 1, 1, 1] and s0['c'] == 0 and s2['c'] == 1
+        ok(f'centrepiece assembles in order {s0} -> {s1} -> {s2}') if seq else fail(f'centrepiece sequence {got}')
+        playing = await pg.evaluate("[...document.querySelectorAll('[data-walk] video')].map(v => v.muted && !v.paused && v.readyState >= 2)")
+        ok('centrepiece videos playing, muted') if all(playing) else fail(f'centrepiece videos {playing}')
+    except Exception as e: fail(f'homepage centrepiece: {e}')
     # About film also autoplays in view; scrolling away pauses it; coming back restarts it from 0:00
     await pg.goto(BASE + '/about-us/'); await pg.locator('.film').scroll_into_view_if_needed(); await pg.wait_for_timeout(3500)
     af = pg.frame_locator('.film iframe')
