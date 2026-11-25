@@ -180,8 +180,9 @@ document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((gal) => {
   const box = gal.querySelector<HTMLDialogElement>('[data-lightbox]');
   if (!box || typeof box.showModal !== 'function') return;            // very old browsers: keep plain links
   const items = [...gal.querySelectorAll<HTMLAnchorElement>('[data-full]')];
-  const img = box.querySelector<HTMLImageElement>('[data-lb-img]')!;
   const cap = box.querySelector<HTMLElement>('[data-lb-cap]')!;
+  const img = document.createElement('img');               // created here: an <img> without src would be invalid markup
+  img.decoding = 'async'; cap.before(img);
   let at = 0, opener: HTMLElement | null = null;
   const show = (i: number) => {
     at = (i + items.length) % items.length; const a = items[at];
