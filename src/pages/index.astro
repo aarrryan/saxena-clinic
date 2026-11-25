@@ -27,19 +27,19 @@ const guides = [
 ---
 <Base
   title="Dermatologist & Skin Clinic in Jabalpur | Saxena Skin and Cosmetic Clinic"
-  description="Dermatology, hair transplantation, laser treatment, cosmetic dermatology, gynaecology and facial aesthetics in Jabalpur â€” five specialist consultants in one clinic."
+  description="Dermatology, hair transplantation, laser treatment, cosmetic dermatology, gynaecology and facial aesthetics in Jabalpur — five specialist consultants in one clinic."
   path="/"
   jsonLd={[clinicSchema(), websiteSchema()]}
 >
-  <!-- 2 Â· HERO -->
+  <!-- 2 · HERO -->
   <section class="hero frame" aria-labelledby="hero-h">
     <div class="hero-in surface">
       <div class="hero-copy container">
-        <p class="eyebrow">Jabalpur Â· Madhya Pradesh</p>
+        <p class="eyebrow">Jabalpur · Madhya Pradesh</p>
         <h1 id="hero-h" class="display">Specialist skin, hair &amp; <span class="accent">aesthetic care.</span></h1>
-        <p class="lede">A multidisciplinary team of specialist consultants bringing together dermatology, hair restoration, laser treatments, womenâ€™s health and facial aesthetics in Jabalpur.</p>
+        <p class="lede">A multidisciplinary team of specialist consultants bringing together dermatology, hair restoration, laser treatments, women’s health and facial aesthetics in Jabalpur.</p>
         <div class="hero-actions">
-          <a class="btn" href={withBase("/contact-us/#enquiry")}>Request an appointment <span class="arrow" aria-hidden="true">â†’</span></a>
+          <a class="btn" href={withBase("/contact-us/#enquiry")}>Request an appointment <span class="arrow" aria-hidden="true">→</span></a>
           <a class="btn btn--ghost" href={withBase("/our-doctors/")}>Meet our doctors</a>
         </div>
       </div>
@@ -55,48 +55,48 @@ const guides = [
     </div>
   </section>
 
-  <!-- 3 Â· TRUST STRIP -->
+  <!-- 3 · TRUST STRIP -->
   <section class="trust container" aria-label="At a glance">
     <ul>
       <li><strong>5</strong><span>specialist consultants under one roof</span></li>
-      {showYears && <li><strong>40+ yrs</strong><span>dermatological experience â€” Dr. Rajeev Saxena</span></li>}
+      {showYears && <li><strong>40+ yrs</strong><span>dermatological experience — Dr. Rajeev Saxena</span></li>}
       <li><strong>DEKA</strong><span>Italian fractional CO2 laser technology</span></li>
       <li><strong>Jabalpur</strong><span>Madhya Pradesh</span></li>
     </ul>
   </section>
 
-  <!-- 3b Â· IDENTITY FILM â€” pinned full screen, advances with the visitor's scroll -->
+  <!-- 3b · IDENTITY FILM — pinned full screen, advances with the visitor's scroll -->
   <ScrollFilm />
 
-  <!-- 4 Â· INTRODUCTION -->
+  <!-- 4 · INTRODUCTION -->
   <section class="section container intro" aria-labelledby="intro-h">
     <div class="split">
       <p class="eyebrow">The clinic</p>
       <div data-reveal>
-        <h2 id="intro-h" class="intro-h">One specialist practice for skin, hair, womenâ€™s health and the face.</h2>
+        <h2 id="intro-h" class="intro-h">One specialist practice for skin, hair, women’s health and the face.</h2>
         <p class="lede">Saxena Skin and Cosmetic Clinic is a multidisciplinary specialist medical practice in Jabalpur, bringing together expertise in clinical and cosmetic dermatology, laser treatments, hair transplantation, gynaecology, and cranio-maxillofacial surgery and facial aesthetics.</p>
         <p class="muted measure">Five consultants with complementary specialities work side by side, so patients can be assessed and, where needed, referred within the same practice. Every treatment begins with a proper medical assessment.</p>
-        <a class="link-arrow" href={withBase("/about-us/")}>About the clinic <span aria-hidden="true">â†’</span></a>
+        <a class="link-arrow" href={withBase("/about-us/")}>About the clinic <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
 
-  <!-- 5 Â· CONSULTANTS -->
+  <!-- 5 · CONSULTANTS -->
   <section class="section--tight container" aria-labelledby="docs-h">
     <div class="sec-head">
       <h2 id="docs-h">Our five consultants</h2>
-      <a class="link-arrow" href={withBase("/our-doctors/")}>All doctors <span aria-hidden="true">â†’</span></a>
+      <a class="link-arrow" href={withBase("/our-doctors/")}>All doctors <span aria-hidden="true">→</span></a>
     </div>
     <ul class="docs" role="list">
       {doctors.map((d) => <li data-reveal><DoctorCard doctor={d} /></li>)}
     </ul>
   </section>
 
-  <!-- 6 Â· SPECIALITIES -->
+  <!-- 6 · SPECIALITIES -->
   <section class="section container" aria-labelledby="spec-h">
     <div class="sec-head">
       <h2 id="spec-h">Specialities</h2>
-      <a class="link-arrow" href={withBase("/conditions-we-treat/")}>Conditions we treat <span aria-hidden="true">â†’</span></a>
+      <a class="link-arrow" href={withBase("/conditions-we-treat/")}>Conditions we treat <span aria-hidden="true">→</span></a>
     </div>
     <ul class="specs" role="list">
       {specialities.map((s, i) => (
@@ -105,14 +105,14 @@ const guides = [
             <span class="num">{String(i + 1).padStart(2, '0')}</span>
             <h3>{s.label}</h3>
             <p class="muted">{s.blurb}</p>
-            <span class="more">Explore <span aria-hidden="true">â†’</span></span>
+            <span class="more">Explore <span aria-hidden="true">→</span></span>
           </a>
         </li>
       ))}
     </ul>
   </section>
 
-  <!-- 7 Â· DERMATOLOGY -->
+  <!-- 7 · DERMATOLOGY -->
   <section class="frame" aria-labelledby="derm-h">
     <div class="surface band">
       <div class="container split">
@@ -127,13 +127,13 @@ const guides = [
             <li><a href={withBase("/dermatology/vitiligo/")}>Vitiligo</a></li><li><a href={withBase("/dermatology/eczema/")}>Eczema</a></li>
             <li><a href={withBase("/dermatology/melasma-pigmentation/")}>Melasma &amp; pigmentation</a></li><li><a href={withBase("/dermatology/acne-scars/")}>Acne scars</a></li>
           </ul>
-          <a class="btn btn--ghost" href={withBase("/dermatology/")}>Dermatology at the clinic <span class="arrow" aria-hidden="true">â†’</span></a>
+          <a class="btn btn--ghost" href={withBase("/dermatology/")}>Dermatology at the clinic <span class="arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 8 Â· HAIR -->
+  <!-- 8 · HAIR -->
   <section class="section container" aria-labelledby="hair-h">
     <div class="split">
       <div data-reveal>
@@ -143,55 +143,55 @@ const guides = [
       <div class="two" data-reveal>
         <div class="card">
           <h3>Medical hair restoration</h3>
-          <p class="muted">Evaluation of hair loss in men and women â€” pattern hair loss, alopecia areata, telogen effluvium and scalp conditions â€” and medical treatment.</p>
-          <a class="link-arrow" href={withBase("/hair-clinic/hair-loss/")}>Hair loss <span aria-hidden="true">â†’</span></a>
+          <p class="muted">Evaluation of hair loss in men and women — pattern hair loss, alopecia areata, telogen effluvium and scalp conditions — and medical treatment.</p>
+          <a class="link-arrow" href={withBase("/hair-clinic/hair-loss/")}>Hair loss <span aria-hidden="true">→</span></a>
         </div>
         <div class="card">
           <h3>Hair transplantation</h3>
           <p class="muted">Candidate evaluation, hairline planning and post-transplant care, with Dr. Nischay Saxena, dermatologist.</p>
-          <a class="link-arrow" href={withBase("/hair-clinic/hair-transplantation/")}>Hair transplantation <span aria-hidden="true">â†’</span></a>
+          <a class="link-arrow" href={withBase("/hair-clinic/hair-transplantation/")}>Hair transplantation <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 9 Â· LASER (DEKA) -->
+  <!-- 9 · LASER (DEKA) -->
   <div class="container"><DekaFeature /></div>
 
-  <!-- 10 Â· COSMETIC DERMATOLOGY -->
+  <!-- 10 · COSMETIC DERMATOLOGY -->
   <section class="section container" aria-labelledby="cos-h">
     <div class="cos">
       <div class="cos-img" data-reveal><ClinicImage name="treatment-preparation" sizes="(min-width: 900px) 30vw, 100vw" /></div>
       <div data-reveal>
         <p class="eyebrow">Cosmetic dermatology</p>
         <h2 id="cos-h">Aesthetic treatment, grounded in dermatology.</h2>
-        <p class="lede">Scars, skin quality, pigmentation and the changes of ageing â€” assessed by a dermatologist, with natural results and honest advice about what each treatment can achieve.</p>
-        <a class="btn btn--ghost" href={withBase("/cosmetic-dermatology/")}>Cosmetic dermatology <span class="arrow" aria-hidden="true">â†’</span></a>
+        <p class="lede">Scars, skin quality, pigmentation and the changes of ageing — assessed by a dermatologist, with natural results and honest advice about what each treatment can achieve.</p>
+        <a class="btn btn--ghost" href={withBase("/cosmetic-dermatology/")}>Cosmetic dermatology <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
 
-  <!-- 11 Â· WOMEN'S HEALTH  &  12 Â· FACE -->
-  <section class="container pair" aria-label="Womenâ€™s health and facial surgery">
+  <!-- 11 · WOMEN'S HEALTH  &  12 · FACE -->
+  <section class="container pair" aria-label="Women’s health and facial surgery">
     <article class="card big" data-reveal>
-      <p class="eyebrow">Womenâ€™s health</p>
+      <p class="eyebrow">Women’s health</p>
       <h2>Gynaecology and cosmetic gynaecology</h2>
       <p class="muted">Private consultations with Dr. Amita Saxena for general gynaecology, menstrual health, menopause-related concerns, intimate health and cosmetic gynaecology.</p>
-      <div class="links"><a class="link-arrow" href={withBase("/gynaecology/")}>Gynaecology <span aria-hidden="true">â†’</span></a><a class="link-arrow" href={withBase("/cosmetic-gynaecology/")}>Cosmetic gynaecology <span aria-hidden="true">â†’</span></a></div>
+      <div class="links"><a class="link-arrow" href={withBase("/gynaecology/")}>Gynaecology <span aria-hidden="true">→</span></a><a class="link-arrow" href={withBase("/cosmetic-gynaecology/")}>Cosmetic gynaecology <span aria-hidden="true">→</span></a></div>
     </article>
     <article class="card big" data-reveal>
       <p class="eyebrow">Face</p>
       <h2>Maxillofacial surgery and facial aesthetics</h2>
       <p class="muted">Dr. Jigisha Chhangani, cranio-maxillofacial surgeon, assesses facial asymmetry, deformity and trauma, and advises on surgical and non-surgical facial aesthetics.</p>
-      <div class="links"><a class="link-arrow" href={withBase("/cranio-maxillofacial-surgery/")}>Maxillofacial surgery <span aria-hidden="true">â†’</span></a><a class="link-arrow" href={withBase("/facial-aesthetics/")}>Facial aesthetics <span aria-hidden="true">â†’</span></a></div>
+      <div class="links"><a class="link-arrow" href={withBase("/cranio-maxillofacial-surgery/")}>Maxillofacial surgery <span aria-hidden="true">→</span></a><a class="link-arrow" href={withBase("/facial-aesthetics/")}>Facial aesthetics <span aria-hidden="true">→</span></a></div>
     </article>
   </section>
 
-  <!-- 13 Â· GALLERY -->
+  <!-- 13 · GALLERY -->
   <section class="section container" aria-labelledby="gal-h">
     <div class="sec-head">
       <h2 id="gal-h">Inside the clinic</h2>
-      <p class="muted small gal-note">Stills from the clinicâ€™s own footage. Professional photography to follow.</p>
+      <p class="muted small gal-note">Stills from the clinic’s own footage. Professional photography to follow.</p>
     </div>
     <ul class="gallery" role="list">
       <li data-reveal><figure><ClinicImage name="laser-console" sizes="(min-width: 900px) 30vw, 100vw" /><figcaption>DEKA fractional CO2 laser system</figcaption></figure></li>
@@ -200,25 +200,25 @@ const guides = [
     </ul>
   </section>
 
-  <!-- 14 Â· PATIENT EDUCATION -->
+  <!-- 14 · PATIENT EDUCATION -->
   <section class="frame" aria-labelledby="edu-h">
     <div class="surface band">
       <div class="container">
         <div class="sec-head">
           <h2 id="edu-h">Patient education</h2>
-          <a class="link-arrow" href={withBase("/patient-education/")}>All guides <span aria-hidden="true">â†’</span></a>
+          <a class="link-arrow" href={withBase("/patient-education/")}>All guides <span aria-hidden="true">→</span></a>
         </div>
         <ul class="guides" role="list">
           {visibleArticles.map((a) => (
             <li><a class="card card--link" href={withBase(`/patient-education/${a.slug}/`)}>
-              <span class="tag">{a.category}{a.status === 'draft' && ' Â· draft'}</span>
-              <h3>{a.title}</h3><p class="muted small">{a.summary}</p><span class="more">Read <span aria-hidden="true">â†’</span></span>
+              <span class="tag">{a.category}{a.status === 'draft' && ' · draft'}</span>
+              <h3>{a.title}</h3><p class="muted small">{a.summary}</p><span class="more">Read <span aria-hidden="true">→</span></span>
             </a></li>
           ))}
           {guides.slice(0, 6 - visibleArticles.length).map((g) => (
             <li><a class="card card--link" href={withBase(g.href)}>
-              <span class="tag">{g.cat} Â· condition guide</span>
-              <h3>{g.label}</h3><span class="more">Read the guide <span aria-hidden="true">â†’</span></span>
+              <span class="tag">{g.cat} · condition guide</span>
+              <h3>{g.label}</h3><span class="more">Read the guide <span aria-hidden="true">→</span></span>
             </a></li>
           ))}
         </ul>
@@ -227,12 +227,12 @@ const guides = [
     </div>
   </section>
 
-  <!-- 15 Â· CONTACT & LOCATION -->
+  <!-- 15 · CONTACT & LOCATION -->
   <section class="section container" aria-label="Contact and location">
     <ContactPanel />
   </section>
 
-  <!-- 16 Â· CTA -->
+  <!-- 16 · CTA -->
   <CTABand />
 </Base>
 

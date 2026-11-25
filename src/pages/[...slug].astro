@@ -72,7 +72,7 @@ const schema = medicalPageSchema(t.h1, t.metaDescription, t.path, t.kind === 'co
       {t.image && (!t.feature || t.path === '/laser-treatments/fractional-co2-laser/') && <div class="img"><ClinicImage name={t.image} sizes="(min-width: 1000px) 28vw, 100vw" /></div>}
       <div class="box ink">
         <p>Discuss your concern with a specialist.</p>
-        <a class="btn btn--sand" href={withBase("/contact-us/#enquiry")}>Request an appointment <span class="arrow" aria-hidden="true">â†’</span></a>
+        <a class="btn btn--sand" href={withBase("/contact-us/#enquiry")}>Request an appointment <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </aside>
   </div>
@@ -86,7 +86,7 @@ const schema = medicalPageSchema(t.h1, t.metaDescription, t.path, t.kind === 'co
         {children.map((c) => (
           <li><a class="card card--link" href={withBase(c.path)}>
             <span class="tag">{c.kind === 'condition' ? 'Condition guide' : 'Treatment guide'}</span>
-            <h3>{c.h1}</h3><p class="muted small">{c.metaDescription}</p><span class="more">Read <span aria-hidden="true">â†’</span></span>
+            <h3>{c.h1}</h3><p class="muted small">{c.metaDescription}</p><span class="more">Read <span aria-hidden="true">→</span></span>
           </a></li>
         ))}
       </ul>
@@ -95,7 +95,7 @@ const schema = medicalPageSchema(t.h1, t.metaDescription, t.path, t.kind === 'co
 
   <nav class="container related" aria-label="Related pages">
     <h2 class="side-h">Related</h2>
-    <ul>{related.map((r) => <li><a class="link-arrow" href={withBase(r.href)}>{r.label} <span aria-hidden="true">â†’</span></a></li>)}</ul>
+    <ul>{related.map((r) => <li><a class="link-arrow" href={withBase(r.href)}>{r.label} <span aria-hidden="true">→</span></a></li>)}</ul>
   </nav>
 
   <CTABand />
