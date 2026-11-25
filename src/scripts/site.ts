@@ -142,7 +142,7 @@ if (walk) {
   toggle.addEventListener('click', () => { userPaused = !userPaused; sync(); });
 
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([en]) => { if (en.isIntersecting) loadVideos(); }, { rootMargin: '60% 0px' }).observe(walk);
+    new IntersectionObserver(([en]) => { if (en.isIntersecting) loadVideos(); }, { rootMargin: '0px 0px 15% 0px' }).observe(walk);   // fetch only as the section scrolls in (saves mobile data)
     new IntersectionObserver(([en]) => { inView = en.isIntersecting; sync(); }, { threshold: 0.05 }).observe(walk);
   } else { loadVideos(); inView = true; sync(); }
 
