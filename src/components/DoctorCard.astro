@@ -2,11 +2,12 @@
 import type { Doctor } from '../data/doctors';
 import { fullName } from '../data/doctors';
 import { site, canShow } from '../config/site';
+import { withBase } from '../lib/paths';
 interface Props { doctor: Doctor; headingLevel?: 'h2' | 'h3'; compact?: boolean }
 const { doctor: d, headingLevel = 'h3', compact = false } = Astro.props;
 const H = headingLevel;
 ---
-<a class:list={['doc', { compact }]} href={`/our-doctors/${d.slug}/`}>
+<a class:list={['doc', { compact }]} href={withBase(`/our-doctors/${d.slug}/`)}>
   <div class="portrait" aria-hidden="true">
     <span class="mono">{d.initials}</span>
     <span class="arc"></span>
