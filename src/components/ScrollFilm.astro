@@ -10,6 +10,10 @@ import { withBase } from '../lib/paths';
  * The film draws every frame as a pure function of time (window.FILM.seek), so scrubbing is exact at
  * any resolution, with no video file. `?export&t=0` is the film's own clean mode: no controls or sound
  * prompt, and it starts paused at 0:00. Without JavaScript the first frame simply stays on screen.
+ *
+ * Placed directly after the four-video centrepiece. site.ts fetches the film well before it is reached,
+ * reveals it only once its fonts are ready (so no half-drawn frame is ever shown), and eases the film
+ * onto the scroll position with a speed limit, so fast scrolling glides instead of jumping.
  */
 ---
 
@@ -20,6 +24,7 @@ import { withBase } from '../lib/paths';
         src={`${withBase("/media/identity-film.html")}?export&t=0`}
         title="Saxena Skin and Cosmetic Clinic identity film"
         loading="lazy"
+        data-sf-frame
         tabindex="-1"
       ></iframe>
     </div>
@@ -32,7 +37,7 @@ import { withBase } from '../lib/paths';
 
 <style>
   /* Scroll length: how far the visitor scrolls to play all 18 seconds. */
-  .sf { position: relative; height: 1540vh; height: 1540svh; background: #F6F3ED; margin-top: clamp(24px, 4vw, 56px); }
+  .sf { position: relative; height: 1540vh; height: 1540svh; background: #F6F3ED; }
   .sf-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; place-items: center; background: #F6F3ED; }
   /* Default (phones, tablets, squarish screens): the whole 16:9 frame is visible, centred on ivory. */
   .sf-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; }
@@ -46,4 +51,7 @@ import { withBase } from '../lib/paths';
   .sf-bar { display: block; width: 120px; height: 2px; border-radius: 2px; background: rgba(23, 25, 24, .14); overflow: hidden; }
   .sf-bar span { display: block; height: 100%; background: var(--teal); transform-origin: 0 50%; transform: scaleX(0); }
   .sf[data-done] .sf-cue { opacity: 0; }
+  /* With JavaScript: hold the frame back until the film is ready to draw every frame, then fade it in. */
+  .sf.sf--js .sf-frame iframe { opacity: 0; transition: opacity .7s var(--ease); }
+  .sf.sf--js.is-ready .sf-frame iframe { opacity: 1; }
 </style>

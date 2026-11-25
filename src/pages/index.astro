@@ -7,6 +7,7 @@ import ClinicImage from '../components/ClinicImage.astro';
 import ContactPanel from '../components/ContactPanel.astro';
 import CTABand from '../components/CTABand.astro';
 import ClinicWalkthrough from '../components/ClinicWalkthrough.astro';
+import ScrollFilm from '../components/ScrollFilm.astro';
 import { doctors } from '../data/doctors';
 import { specialities } from '../data/nav';
 import { articles, plannedTopics, isPublishable } from '../data/articles';
@@ -65,8 +66,11 @@ const guides = [
     </ul>
   </section>
 
-  <!-- 3b · INSIDE THE CLINIC — four-video, scroll-controlled centrepiece (identity film now lives on About) -->
+  <!-- 3b · INSIDE THE CLINIC — four-video, scroll-controlled centrepiece -->
   <ClinicWalkthrough />
+
+  <!-- 3c · IDENTITY FILM — pinned full screen; the film advances and rewinds with the visitor's scroll -->
+  <ScrollFilm />
 
   <!-- 4 · INTRODUCTION -->
   <section class="section container intro" aria-labelledby="intro-h">

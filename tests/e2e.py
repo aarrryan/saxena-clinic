@@ -136,6 +136,26 @@ async def interactions(b):
         playing = await pg.evaluate("[...document.querySelectorAll('[data-walk] video')].map(v => v.muted && !v.paused && v.readyState >= 2)")
         ok('centrepiece videos playing, muted') if all(playing) else fail(f'centrepiece videos {playing}')
     except Exception as e: fail(f'homepage centrepiece: {e}')
+    # identity film (directly after the centrepiece) scrubs with scroll in both directions: 0 s → 8 s → 16 s → 4 s → 0 s
+    await pg.goto(BASE + '/'); await pg.wait_for_timeout(300)
+    adj = await pg.evaluate("document.querySelector('[data-walk]').nextElementSibling === document.querySelector('[data-scrollfilm]')")
+    ok('identity film sits directly after the four-video centrepiece') if adj else fail('identity film is not directly after the centrepiece')
+    geo = await pg.evaluate("(() => { const s = document.querySelector('[data-scrollfilm]'); const r = s.getBoundingClientRect(); return { top: r.top + scrollY, span: r.height - innerHeight }; })()")
+    async def film_at(frac):
+        await pg.evaluate(f"window.scrollTo(0, {geo['top'] + geo['span'] * frac})")
+        prev = None
+        for _ in range(40):                       # the film eases (speed-limited) onto the scroll position; wait until it settles
+            await pg.wait_for_timeout(300)
+            tc = await pg.frame_locator('[data-scrollfilm] iframe').locator('#tc').text_content(timeout=5000)
+            m = tc.split('/')[0].strip().split(':'); v = round(int(m[0]) * 60 + float(m[1]), 2)
+            if v == prev: return v
+            prev = v
+        return prev
+    try:
+        got = [await film_at(f) for f in (0.0, 0.5, 1.0, 0.25, 0.0)]
+        exp = [0, 8, 16, 4, 0]
+        ok(f'identity film follows scroll both ways {got}') if all(abs(g - e) < 0.3 for g, e in zip(got, exp)) else fail(f'identity film scroll mapping {got} (expected ≈{exp})')
+    except Exception as e: fail(f'identity film: {e}')
     # About film also autoplays in view; scrolling away pauses it; coming back restarts it from 0:00
     await pg.goto(BASE + '/about-us/'); await pg.locator('.film').scroll_into_view_if_needed(); await pg.wait_for_timeout(3500)
     af = pg.frame_locator('.film iframe')

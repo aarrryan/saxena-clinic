@@ -14,4 +14,4 @@ Options when this is picked up: a hosted form service (Formspree, Basin, Getform
 ## Other notes
 
 - `404.html` declares its own address as `/saxena-clinic/404/` (canonical/OG URL), which is not a real page. Harmless — the 404 page is not indexed — and left as is.
-- The scroll-controlled identity film component (`src/components/ScrollFilm.astro`) is no longer used on the homepage (the four-video centrepiece replaced it); it is kept in the codebase, and the identity film itself remains on the About page.
+- The homepage runs two pinned scroll sections back to back (four-video centrepiece, about 3 screens, then the scroll-controlled identity film, about 14 screens), by client request. The identity film also remains on the About page as a compact player.

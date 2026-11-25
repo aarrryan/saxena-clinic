@@ -83,31 +83,59 @@ if (autoWraps.length) {
   } else autoWraps.forEach(enter);
 }
 
-/* homepage scroll film: scroll position drives the film's clock (0–18 s), eased so it glides rather than jumps */
+/* homepage scroll film: scroll position drives the film's clock (0–16 s), frame by frame, both directions.
+   Refinements over the first version:
+   - time-based easing (same feel at 60 Hz and 120 Hz) with a speed limit, so a fast flick glides instead of jumping;
+   - the film is fetched two screens before it is reached and only revealed once its fonts are ready;
+   - arriving from below (or reloading mid-page) starts on the right frame instead of replaying from 0:00. */
 const sf = document.querySelector<HTMLElement>('[data-scrollfilm]');
 if (sf) {
-  const frame = sf.querySelector<HTMLIFrameElement>('iframe')!;
+  type FilmApi = { seek: (t: number) => unknown; ready?: Promise<unknown> | null };
+  const frame = sf.querySelector<HTMLIFrameElement>('[data-sf-frame]') ?? sf.querySelector<HTMLIFrameElement>('iframe')!;
   const bar = sf.querySelector<HTMLElement>('[data-sf-bar]');
-  const END = 16;                                             // the logo end card is complete at 16 s; after that the film loops back
-  let cur = 0, running = false, last = -1;
-  const film = () => { try { return (frame.contentWindow as (Window & { FILM?: { seek: (t: number) => unknown } }) | null)?.FILM ?? null; } catch { return null; } };
+  const END = 16;           // the logo end card is complete at 16 s; after that the film only loops back
+  const SETTLE = 0.2;       // seconds: how softly the film settles onto the scroll position
+  const MAX_RATE = 2.4;     // film-seconds per real second: the fastest the film may move, however fast the scroll
+  let film: FilmApi | null = null, cur = 0, last = -1, running = false, prevTs = 0;
+  sf.classList.add('sf--js');
+
   const progress = () => {
     const r = sf.getBoundingClientRect(); const span = r.height - innerHeight;
     return span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
   };
-  const tick = () => {
+  const attach = () => {
+    let f: FilmApi | undefined;
+    try { f = (frame.contentWindow as (Window & { FILM?: FilmApi }) | null)?.FILM; } catch { /* not loaded yet */ }
+    if (!f || f === film) return;
+    const go = () => { film = f!; cur = progress() * END; film.seek(cur); last = cur; sf.classList.add('is-ready'); };
+    if (f.ready) f.ready.then(go, go); else go();
+  };
+  frame.addEventListener('load', attach);
+  attach();
+
+  const tick = (ts: number) => {
+    const dt = prevTs ? Math.min(0.1, (ts - prevTs) / 1000) : 1 / 60; prevTs = ts;
     const p = progress(), target = p * END;
-    cur += (target - cur) * (reduce ? 1 : 0.09);
-    if (Math.abs(target - cur) < 0.002) cur = target;
-    if (cur !== last) { const f = film(); if (f) { f.seek(cur); last = cur; } }
-    if (bar) bar.style.transform = `scaleX(${p})`;
+    if (reduce) cur = target;
+    else {
+      const cap = MAX_RATE * dt;
+      const step = (target - cur) * (1 - Math.exp(-dt / SETTLE));
+      cur += Math.max(-cap, Math.min(cap, step));
+      if (Math.abs(target - cur) < 0.003) cur = target;
+    }
+    if (film && Math.abs(cur - last) > 0.0004) { film.seek(cur); last = cur; }
+    if (bar) bar.style.transform = `scaleX(${p.toFixed(4)})`;
     sf.toggleAttribute('data-done', p > 0.02);
     if (running) requestAnimationFrame(tick);
   };
-  frame.addEventListener('load', () => { last = -1; });
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([en]) => { const was = running; running = en.isIntersecting; if (running && !was) requestAnimationFrame(tick); }, { rootMargin: '25% 0px' }).observe(sf);
-  } else { running = true; requestAnimationFrame(tick); }
+    // preload: start fetching the film two screens ahead (the iframe is lazy only as the no-JavaScript fallback)
+    new IntersectionObserver(([en]) => { if (en.isIntersecting && frame.loading !== 'eager') frame.loading = 'eager'; }, { rootMargin: '200% 0px' }).observe(sf);
+    new IntersectionObserver(([en]) => {
+      const was = running; running = en.isIntersecting;
+      if (running && !was) { cur = progress() * END; prevTs = 0; requestAnimationFrame(tick); }   // enter on the right frame
+    }, { rootMargin: '25% 0px' }).observe(sf);
+  } else { frame.loading = 'eager'; running = true; requestAnimationFrame(tick); }
 }
 
 /* ---------- homepage "Inside the clinic": four-video, scroll-controlled composition ----------
