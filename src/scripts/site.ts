@@ -181,12 +181,12 @@ document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((gal) => {
   if (!box || typeof box.showModal !== 'function') return;            // very old browsers: keep plain links
   const items = [...gal.querySelectorAll<HTMLAnchorElement>('[data-full]')];
   const cap = box.querySelector<HTMLElement>('[data-lb-cap]')!;
-  const img = document.createElement('img');               // created here: an <img> without src would be invalid markup
-  img.decoding = 'async'; cap.before(img);
+  let img: HTMLImageElement | null = null;                  // created on first open: an <img> without src is invalid markup
   let at = 0, opener: HTMLElement | null = null;
   const show = (i: number) => {
     at = (i + items.length) % items.length; const a = items[at];
-    img.src = a.dataset.full!; img.alt = a.querySelector('img')?.alt ?? ''; cap.textContent = `${a.dataset.caption} · ${at + 1} of ${items.length}`;
+    if (!img) { img = document.createElement('img'); img.decoding = 'async'; cap.before(img); }
+    img.alt = a.querySelector('img')?.alt ?? ''; img.src = a.dataset.full!; cap.textContent = `${a.dataset.caption} · ${at + 1} of ${items.length}`;
   };
   items.forEach((a, i) => a.addEventListener('click', (e) => { e.preventDefault(); opener = a; show(i); box.showModal(); }));
   box.querySelector('[data-lb-close]')!.addEventListener('click', () => box.close());
@@ -194,7 +194,7 @@ document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((gal) => {
   box.querySelector('[data-lb-next]')!.addEventListener('click', () => show(at + 1));
   box.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(at - 1); else if (e.key === 'ArrowRight') show(at + 1); });
   box.addEventListener('click', (e) => { if (e.target === box) box.close(); });  // click on the backdrop
-  box.addEventListener('close', () => { img.removeAttribute('src'); opener?.focus(); });
+  box.addEventListener('close', () => { img?.remove(); img = null; opener?.focus(); });
 });
 
 /* ---------- appointment enquiry form ---------- */
