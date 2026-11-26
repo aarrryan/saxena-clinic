@@ -119,12 +119,14 @@ const walk = document.querySelector<HTMLElement>('[data-walk]');
 if (walk) {
   const panels = [...walk.querySelectorAll<HTMLElement>('[data-panel]')];
   const core = walk.querySelector<HTMLElement>('[data-core]')!;
-  const intro = walk.querySelector<HTMLElement>('.walk-intro');
   const bar = walk.querySelector<HTMLElement>('[data-walk-bar]');
   const toggle = walk.querySelector<HTMLButtonElement>('[data-walk-toggle]')!;
   const videos = [...walk.querySelectorAll<HTMLVideoElement>('video[data-src]')];
-  const tallEnough = () => innerHeight >= 560 && innerWidth >= 340;
-  const live = !reduce && tallEnough();
+  const tallEnough = () => {
+    const compact = matchMedia('(max-width: 760px), (max-width: 1100px) and (orientation: portrait)').matches;
+    return innerHeight >= (compact ? 760 : 560) && innerWidth >= (compact ? 380 : 761);
+  };
+  let live = false;
   let userPaused = false, inView = false, loaded = false;
 
   const loadVideos = () => {
@@ -146,33 +148,100 @@ if (walk) {
     new IntersectionObserver(([en]) => { inView = en.isIntersecting; sync(); }, { threshold: 0.05 }).observe(walk);
   } else { loadVideos(); inView = true; sync(); }
 
-  if (live) {
+  const START = [0.04, 0.2, 0.36, 0.52], LEN = 0.2, CORE = [0.72, 0.9];
+  const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+  const ease = (x: number) => 1 - Math.pow(1 - x, 3);
+
+  let cur = 0, running = false, last = -1;
+  let animationFrame: number | null = null;
+  let animationObserver: IntersectionObserver | null = null;
+
+  const progress = () => {
+    const r = walk.getBoundingClientRect();
+    const span = r.height - innerHeight;
+    return span > 0 ? clamp01(-r.top / span) : 1;
+  };
+
+  const paint = (p: number) => {
+    panels.forEach((el, i) =>
+      el.style.setProperty('--k', ease(clamp01((p - START[i]) / LEN)).toFixed(4))
+    );
+    core.style.setProperty('--c', ease(clamp01((p - CORE[0]) / (CORE[1] - CORE[0]))).toFixed(4));
+    if (bar) bar.style.transform = `scaleX(${p.toFixed(4)})`;
+  };
+
+  const stopAnimation = () => {
+    running = false;
+    if (animationFrame !== null) {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = null;
+    }
+  };
+
+  const tick = () => {
+    animationFrame = null;
+    if (!running || !live) return;
+
+    const target = progress();
+    cur += (target - cur) * 0.14;
+    if (Math.abs(target - cur) < 0.0005) cur = target;
+
+    if (cur !== last) {
+      paint(cur);
+      last = cur;
+    }
+
+    if (running) animationFrame = requestAnimationFrame(tick);
+  };
+
+  const startAnimation = () => {
+    if (running || !live) return;
+    running = true;
+    animationFrame = requestAnimationFrame(tick);
+  };
+
+  const deactivate = () => {
+    if (!live) return;
+    live = false;
+    stopAnimation();
+    animationObserver?.disconnect();
+    animationObserver = null;
+    walk.classList.remove('walk--live');
+    panels.forEach((el) => el.style.removeProperty('--k'));
+    core.style.removeProperty('--c');
+    if (bar) bar.style.removeProperty('transform');
+    cur = 0;
+    last = -1;
+  };
+
+  const activate = () => {
+    if (live || reduce || !tallEnough()) return;
+
+    live = true;
     walk.classList.add('walk--live');
-    const START = [0.04, 0.2, 0.36, 0.52], LEN = 0.2, CORE = [0.72, 0.9];
-    const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
-    const ease = (x: number) => 1 - Math.pow(1 - x, 3);                     // ease-out cubic: arrives softly
-    let cur = 0, running = false, last = -1;
-    const progress = () => {
-      const r = walk.getBoundingClientRect(); const span = r.height - innerHeight;
-      return span > 0 ? clamp01(-r.top / span) : 1;
-    };
-    const paint = (p: number) => {
-      panels.forEach((el, i) => el.style.setProperty('--k', ease(clamp01((p - START[i]) / LEN)).toFixed(4)));
-      core.style.setProperty('--c', ease(clamp01((p - CORE[0]) / (CORE[1] - CORE[0]))).toFixed(4));
-      if (bar) bar.style.transform = `scaleX(${p.toFixed(4)})`;
-    };
-    const tick = () => {
-      const target = progress();
-      cur += (target - cur) * 0.14;
-      if (Math.abs(target - cur) < 0.0005) cur = target;
-      if (cur !== last) { paint(cur); last = cur; }
-      if (running) requestAnimationFrame(tick);
-    };
-    new IntersectionObserver(([en]) => { const was = running; running = en.isIntersecting; if (running && !was) requestAnimationFrame(tick); }, { rootMargin: '20% 0px' }).observe(walk);
-    paint(progress()); cur = last = progress();
-    // a resize that makes the screen too short for the pinned version falls back to the static composition
-    addEventListener('resize', () => { if (!tallEnough() && walk.classList.contains('walk--live')) { walk.classList.remove('walk--live'); running = false; panels.forEach((el) => el.style.removeProperty('--k')); core.style.removeProperty('--c'); } }, { passive: true });
-  }
+
+    cur = last = progress();
+    paint(cur);
+
+    if ('IntersectionObserver' in window) {
+      animationObserver = new IntersectionObserver(([en]) => {
+        if (en.isIntersecting) startAnimation();
+        else stopAnimation();
+      }, { rootMargin: '20% 0px' });
+
+      animationObserver.observe(walk);
+    } else {
+      startAnimation();
+    }
+  };
+
+  const updateLayout = () => {
+    if (reduce || !tallEnough()) deactivate();
+    else activate();
+  };
+
+  addEventListener('resize', updateLayout, { passive: true });
+  updateLayout();
 }
 
 /* ---------- facilities gallery lightbox (About) — native <dialog>; links still work without JS ---------- */
