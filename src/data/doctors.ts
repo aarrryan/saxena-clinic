@@ -23,7 +23,7 @@ export interface Doctor {
   experienceNote?: { value: string; source: string; status: Status };
   relatedPages: string[];
   schemaSpecialty?: 'Dermatology' | 'Gynecologic';
-  photo: null;                       // approved photographs only — none supplied yet
+  photo: string | null;              // approved photograph path, or null
   /** Whole-profile approval by the clinic. Physician structured data is emitted only when 'confirmed'. */
   profileStatus: Status;
   metaTitle: string;
@@ -54,7 +54,7 @@ export const doctors: Doctor[] = [
     qualifications: { value: 'D.V.D. (A.F.M.C.)', source: 'Clinic consultant signboard (screenshot in reference-assets)', status: 'supplied' },
     relatedPages: ['/dermatology/', '/dermatology/psoriasis/', '/dermatology/vitiligo/', '/dermatology/melasma-pigmentation/', '/dermatology/acne/', '/dermatology/eczema/'],
     schemaSpecialty: 'Dermatology',
-    photo: null,
+    photo: '/media/doctors/dr-rajeev-saxena.webp',
     profileStatus: 'supplied',
     metaTitle: 'Dr. Rajeev Saxena — Senior Consultant Dermatologist, Jabalpur',
     metaDescription: 'Dr. Rajeev Saxena, senior consultant dermatologist at Saxena Skin and Cosmetic Clinic, Jabalpur, with more than 40 years of dermatological experience in clinical dermatology.',
@@ -83,7 +83,7 @@ export const doctors: Doctor[] = [
     qualifications: { value: 'M.D. (Dermatology)', source: 'Clinic consultant signboard', status: 'supplied' },
     relatedPages: ['/laser-treatments/', '/laser-treatments/fractional-co2-laser/', '/dermatology/acne-scars/', '/laser-treatments/laser-hair-reduction/', '/cosmetic-dermatology/'],
     schemaSpecialty: 'Dermatology',
-    photo: null,
+    photo: '/media/doctors/dr-akshay-saxena.webp',
     profileStatus: 'supplied',
     metaTitle: 'Dr. Akshay Saxena — Clinical & Laser Dermatology, Jabalpur',
     metaDescription: 'Dr. Akshay Saxena, consultant dermatologist in Jabalpur focusing on clinical dermatology and laser dermatology, including DEKA fractional CO2 laser for selected scar concerns.',
@@ -111,7 +111,7 @@ export const doctors: Doctor[] = [
     qualifications: { value: '', source: 'Not supplied; not on consultant signboard', status: 'missing' },
     relatedPages: ['/hair-clinic/', '/hair-clinic/hair-transplantation/', '/hair-clinic/hair-loss/', '/hair-clinic/prp-hair-treatment/'],
     schemaSpecialty: 'Dermatology',
-    photo: null,
+    photo: '/media/doctors/dr-nischay-saxena.webp',
     profileStatus: 'supplied',
     metaTitle: 'Dr. Nischay Saxena — Hair Transplant & Hair Restoration, Jabalpur',
     metaDescription: 'Dr. Nischay Saxena, dermatologist leading hair restoration and hair transplantation in Jabalpur: hair loss evaluation, treatment and transplant planning.',
